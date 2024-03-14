@@ -44,9 +44,9 @@ Autor: Jakiś chłop z internetu
   }
   .slider-container>input[type="range"]::-webkit-slider-thumb {
     -webkit-appearance: none;
-    margin-top: -9px;
-    height: 1.7em;
-    width: 1.7em;
+    margin-top: -17px;
+    height: 40px;
+    width: 40px;
     background-color: #30c79f;
     cursor: pointer;
     pointer-events: auto;
@@ -54,8 +54,8 @@ Autor: Jakiś chłop z internetu
   }
   .slider-container>input[type="range"]::-moz-range-thumb {
     -moz-appearance: none;
-    height: 1.7em;
-    width: 1.7em;
+    height: 40px;
+    width: 40px;
     cursor: pointer;
     border: none;
     border-radius: 50%;

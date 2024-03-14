@@ -81,7 +81,7 @@ Przykład dodania kolejnego rozszerzenia pliku, wystarczy skopiować poniższy k
 
 // Połączenie WebSocket
 io.sockets.on('connection', function (socket) {
-  io.emit('configInit', config);
+  io.emit('config', config);
 
 
   //Dane wyslane z clienta pythona
@@ -92,9 +92,9 @@ io.sockets.on('connection', function (socket) {
   });
 
   //Dane config
-  socket.on('configInit', (data) =>{
+  socket.on('config', (data) =>{
     if(data.type !== undefined) {
-      io.emit('clientData', data);
+      io.emit('config', data);
       config=data;
     }
   })

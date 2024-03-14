@@ -343,17 +343,26 @@ input[type="number"]:focus {
 
 /* IDs */
 
+#closeSaveInfoButton{
+
+}
+
 #helpQR
 {
     display: flex;
     justify-content: center;
 }
 
-#menuDisplay{
-    color:#fafafa
+#kWhStats{
+    font-size: 18px;
+    color:beige;
 }
 
-#PWMSubmit{
+#menuDisplay{
+    color:beige;
+}
+
+#PWMSubmit, #closeSaveInfoButton{
     background: linear-gradient(140deg, #24A535 20%, #54FF65 80%);
 }
 

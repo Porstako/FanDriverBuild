@@ -25,8 +25,8 @@
         <div style="display:flex; justify-content: space-around;">
           <div class="diodeLabel" style="margin-left: -2px;"><span>&#9398;</span></div>
           <div class="diodeLabel" style="margin-left: -2px;"><span>&#8679;</span></div>
-          <div class="diodeLabel" style="margin-left: 1px;"><span>&#8681;</span></div>  
-          <div class="diodeLabel" style="margin-right: -4px;"><span>&#9888;</span></div> 
+          <div class="diodeLabel" style="margin-left: 1px;"><span>&#8681;</span></div>
+          <div class="diodeLabel" style="margin-right: -4px;"><span>&#9888;</span></div>
         </div>
       </div>
 
@@ -37,33 +37,35 @@
           <div class="valueObject" style="margin-top: 20px;">
             <div><span class="label">NAPIĘCIE</span></div>
             <div class="ring"></div>
-            <div class="value sideValue" style="margin-top: -105px; margin-left: 40px;"><span id="Volt">750</span><span> V</span></div>
+            <div class="value sideValue" style="margin-top: -125px; margin-left: 20px; font-size: 42px; width:130px"><span id="Volt">0</span><br><span style="font-size: 28px;"> V</span></div>
           </div>
 
           <div class="valueObject">
             <span class="label">MOC</span>
             <div class="ringMain"></div>
-            <div class="value" style="font-size: 58px; margin-top: -180px; margin-left: 80px; text-align: center;"><span id="Watt">22000</span><span style="font-size: 32px;"><br> W</span></div>
+            <div class="value" style="font-size: 58px; margin-top: -180px; margin-left: 55px; text-align: center; width: 220px;"><span id="Watt">0</span><span style="font-size: 36px;"><br> W</span></div>
           </div>
 
           <div class="valueObject" style="margin-top: 20px;">
             <span class="label">PRĄD</span>
             <div class="ring"></div>
-            <div class="value sideValue" style="margin-top: -105px;margin-left:35px;"><span id="Amper">2.66</span><span> A</span></div>
+            <div class="value sideValue" style="margin-top: -125px; margin-left: 20px; font-size: 42px; width:130px"><span id="Amper">30.0</span><br><span style="font-size: 28px;"> A</span></div>
           </div>
         </div>
       </div>
-      <div class="box" id="PWMStatus" style="max-width: 500px; margin-top: 65px; padding: 10px 15px 15px 50px; margin-left: -40px">
+      <div class="box" id="PWMStatus" style="max-width: 300px; margin-top: 65px; padding: 10px 15px 15px 50px; margin-left: -40px">
         <span class="label" style="font-weight: bold;">PWM Status</span>
         
         <div class="boxContent">
           <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM1GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM1Percentage">50</span><span>%</span></div></div>
           <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM2GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM2Percentage">0</span><span>%</span></div></div>
-          <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="temperatureGaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 38px;"><span id="temperature">0</span><span>°C</span></div></div>
         </div>
-
-
-
+      </div>
+      <div class="box" id="kWhStats" style="float: right; width:180px; height: 134px; border-radius:30px 30px 30px 30px; margin-top: -154px; margin-right: 275px;">  
+        <span class="label" style="font-weight: bold;font-size: 32px;">Statystyki</span>
+        <div class="kWhStatsRow">24h: <span id="kWhValue_24H">0.00</span> kWh</div>
+        <div class="kWhStatsRow">30 dni: <span id="kWhValue_30D">0.00</span> kWh</div>
+        <div class="kWhStatsRow">Ogółem: <span id="kWhValue_OVERALL">0.00</span> kWh</div>
       </div>
       <div class="driveButton" id="PWMFull" style="margin: -100px 0 0 550px;"><span>PWM<br>100%</span></div>
       <div class="driveButton" id="PWMStop" style="margin: -100px 0 0 635px;"><span>PWM<br>0%</span></div>
@@ -113,6 +115,14 @@
           <div class="label" style="text-align: center;margin-bottom: 10px; font-size: 30px;">Pomoc</div>
           <span>Instrukcję urządzenia oraz odpowiedzi na najpopularniejsze pytania znajdziesz skanując poniższy kod QR, bądź odwiedzając adres:<br></span><p style="text-align: center;">https://aerosync.pl/PGL1/instrukcja.pdf</p> 
           <div id="helpQR"><img src="resources/helpQRCode.svg" width="130px" height="130px"></div>
+        </div>
+      </div>
+      <div class="menuDisplayContainer" id="saveInfoContainer"> 
+        <div class="menuDisplayDetails">
+          <div class="label" style="text-align: center;margin-bottom: 10px; font-size: 42px; margin-top: 30px;">Zapisano ustawienia</div>
+          <p style="text-align: center;">Ustawienia zostały zapisane pomyślnie<br>
+          Okno zamknie się automatycznie w przeciągu 5 sekund</span>
+          <div style="display:flex; justify-content: center;"><div class="settingsButton" id="closeSaveInfoButton" style="text-align: center; margin-top: 60px;"><span>OK</span></div></div>
         </div>
       </div>
       <div id="menuButton2" class="menuButton" style="float: left; border-radius: 0% 0% 100% 0%;"><div class="menuButtonIcon"><span style="margin-left: 14px;">&#11148;</span></div></div>
@@ -175,15 +185,11 @@
           </label>
         </div>
       </div>
-      <div class="box" style="float: right; width:200px; border-radius:30px 0px 0px 30px; margin-top: 50px;">  
-        Wygenerowany prąd: <span id="kWhValue">0.00</span> kWh
       
-      </div>
       
       
 
-      <div class="box" style="float:left; position:absolute; margin: 393px 0px 0px 0px; border-radius: 0px; width:1004px">
-        Adres IP: <span id="ipAdress">Unable to get ip adress</span><br>
+      <div class="box" style="float:left; position:absolute; margin: 412px 0px 0px 0px; border-radius: 0px; width:1004px">
         Model produktu:<span id="productModel"></span><br>
         Nr Seryjny: <span id="serialNumber">Nie udało się odczytać numeru seryjnego</span><br>
         Wersja systemu: <span id="programVersion"></span><br>

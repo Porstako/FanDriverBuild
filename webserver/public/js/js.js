@@ -4,7 +4,8 @@
 
 // Oczekiwanie na kliknięcie
 document.getElementById("menuButton").addEventListener('click', () => menuToggle());
-document.getElementById("menuButton2").addEventListener('click', () => menuToggle()); 
+document.getElementById("menuButton2").addEventListener('click', () => menuToggle());
+
 
 // funkcja do przejścia Strona główna <--> Menu
 function menuToggle(){
@@ -20,6 +21,23 @@ function menuToggle(){
 }
 
 //Proste funkcje przycisków polityki prywatnosci i pomocy
+document.getElementById("PWMCancel").addEventListener('click', () => {
+  location.reload();
+}); 
+
+document.getElementById("PWMSubmit").addEventListener('click', () => {
+  PWMSubmit();
+  document.getElementById("saveInfoContainer").style.display = 'flex';
+  setTimeout(() => {
+    document.getElementById("saveInfoContainer").style.display = 'none';
+  }, 5000)
+  
+}); 
+
+document.getElementById("closeSaveInfoButton").addEventListener('click', () => {
+  document.getElementById("saveInfoContainer").style.display = 'none';
+}); 
+
 document.getElementById("privacyPolicyButton").addEventListener('click', () => {
   document.getElementById("privacyPolicyContainer").style.display = 'flex';
 });
