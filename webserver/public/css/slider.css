@@ -6,15 +6,37 @@ Autor: Jakiś chłop z internetu
 Źródło: https://codingartistweb.com/2021/06/double-range-slider-html-css-javascript/
 */
 
+.PWMSliderBox{
+  width: 730px;
+  float:right;
+  margin-right: 30px;
+}
+
+.PWMValueButton{
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+  color:beige;
+  font-size: 35px;
+}
+
+.PWMMinus{
+  background: linear-gradient(220deg, #00AcFf 20%, #007cef 80%);
+}
+
+.PWMPlus{
+  background: linear-gradient(140deg, #24A535 20%, #54FF65 80%);
+}
+
 .slider-container {
     display: inline-block;
     position: relative;
-    width: 400px;
+    width: 100%;
     height: 28px;
   }
   .slider-track {
-    width: 100%;
-    height: 10px;
+    width: 99%;
+    height: 12px;
     position: absolute;
     margin: auto;
     top: 0;

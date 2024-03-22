@@ -90,5 +90,7 @@ socket.on('config', (data) =>{
     document.getElementById("PWM2MaxInput").value=data.PWM2Max;
     slider2.values[1]=data.PWM2Max;
     document.getElementById("PWM2Max").textContent=data.PWM2Max;
+    slider.fillColor();
+    slider2.fillColor();
 }
 });

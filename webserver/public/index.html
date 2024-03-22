@@ -53,15 +53,14 @@
           </div>
         </div>
       </div>
-      <div class="box" id="PWMStatus" style="max-width: 300px; margin-top: 65px; padding: 10px 15px 15px 50px; margin-left: -40px">
-        <span class="label" style="font-weight: bold;">PWM Status</span>
+      <div class="box" id="PWMStatus" style="max-width: 140px; margin-top: 65px; padding: 10px 15px 15px 50px; margin-left: -40px">
+        <span class="label" style="font-weight: bold;">PWM</span>
         
         <div class="boxContent">
-          <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM1GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM1Percentage">50</span><span>%</span></div></div>
           <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM2GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM2Percentage">0</span><span>%</span></div></div>
         </div>
       </div>
-      <div class="box" id="kWhStats" style="float: right; width:180px; height: 134px; border-radius:30px 30px 30px 30px; margin-top: -154px; margin-right: 275px;">  
+      <div class="box" id="kWhStats" style="float: right; width:180px; height: 134px; border-radius:30px 30px 30px 30px; margin-top: -154px; margin-right: 435px;">  
         <span class="label" style="font-weight: bold;font-size: 32px;">Statystyki</span>
         <div class="kWhStatsRow">24h: <span id="kWhValue_24H">0.00</span> kWh</div>
         <div class="kWhStatsRow">30 dni: <span id="kWhValue_30D">0.00</span> kWh</div>
@@ -126,8 +125,10 @@
         </div>
       </div>
       <div id="menuButton2" class="menuButton" style="float: left; border-radius: 0% 0% 100% 0%;"><div class="menuButtonIcon"><span style="margin-left: 14px;">&#11148;</span></div></div>
-      <div style="display:flex; justify-content: space-around;">
-        <div class="box" style="display:block">
+      
+      <div style="display:block; justify-content: space-around;">
+        <div class="box PWMSliderBox" style="display:block; margin-top: 10px;">
+          <div class="label" style="text-align: center; font-size: 28px;font-weight: bold;">PWM1</div> 
           <div class="slider-container" id="PWM1Slider">
             <div class="slider-track"></div>
             <input type="range" id="PWM1MinInput" name="PWM1" min="0" max="1000" step="1" value="200" autocomplete="off" />
@@ -135,31 +136,51 @@
           </div>
           
           <div style="display: flex; justify-content: space-between;">
-            <div class="label">PWM1</div> <div><output name="PWM1" id="PWM1Min"></output>V - <output name="PWM1" id="PWM1Max"></output>V</div>
+            
+          </div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+            <div style="display: flex;"> 
+              <div class="PWMValueButton PWMMinus" id="PWM1MinMinus" style="margin-left: 30px;text-align: center;"><span>-</span></div>
+              <div class="PWMValueButton PWMPlus" id="PWM1MinPlus" style="margin-left: 45px;text-align: center;"><span>+</span></div>
+            </div>
+            <div style="font-size: 28px;font-weight: bold;"><output name="PWM1" id="PWM1Min"></output>V - <output name="PWM1" id="PWM1Max"></output>V</div>
+            <div style="display: flex;">
+              <div class="PWMValueButton PWMMinus" id="PWM1MaxMinus" style="text-align: center;"><span>-</span></div>
+              <div class="PWMValueButton PWMPlus" id="PWM1MaxPlus" style="margin-left: 45px; margin-right: 30px;text-align: center;"><span>+</span></div>
+            </div>
           </div>
         </div>
         
-        <div class="box" style="display:block">
+        <div class="box PWMSliderBox" style="display:block; margin-top: 60px;">
+          <div class="label" style="text-align: center; font-size: 28px;font-weight: bold;">PWM2</div>
           <div class="slider-container" id="PWM2Slider">
             <div class="slider-track"></div>
             <input type="range" id="PWM2MinInput" name="PWM2" min="0" max="1000" step="1" value="300" autocomplete="off" />
             <input type="range" id="PWM2MaxInput" name="PWM2" min="0" max="1000" step="1" value="700" autocomplete="off" />
           </div>
           
-          <div style="display: flex; justify-content: space-between;">
-            <div class="label">PWM2</div><div><output name="PWM2" id="PWM2Min"></output>V - <output name="PWM2" id="PWM2Max"></output>V</div>
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
+            <div style="display: flex;"> 
+              <div class="PWMValueButton PWMMinus" id="PWM2MinMinus" style="margin-left: 30px; text-align: center;"><span>-</span></div>
+              <div class="PWMValueButton PWMPlus" id="PWM2MinPlus" style="margin-left: 45px;text-align: center;"><span>+</span></div>
+            </div>
+            <div style="font-size: 28px; font-weight: bold;"><output name="PWM2" id="PWM2Min"></output>V - <output name="PWM2" id="PWM2Max"></output>V</div>
+            <div style="display: flex;">
+              <div class="PWMValueButton PWMMinus" id="PWM2MaxMinus" style="text-align: center;"><span>-</span></div>
+              <div class="PWMValueButton PWMPlus" id="PWM2MaxPlus" style="margin-left: 45px; margin-right: 30px; text-align:center;"><span>+</span></div>
+            </div>  
           </div>
         </div>
       </div>
-      <div class="settingsButton" id="PWMSubmit" style="margin-top: 330px; margin-left: 800px;text-align: center;"><span>Zapisz</span></div>
-      <div class="settingsButton" id="PWMCancel" style="margin-top: 330px; margin-left: 600px;text-align: center;"><span>Anuluj</span></div>
+      <div class="settingsButton" id="PWMSubmit" style="margin-top: 400px; margin-left: 800px;text-align: center;"><span>Zapisz</span></div>
+      <div class="settingsButton" id="PWMCancel" style="margin-top: 400px; margin-left: 600px;text-align: center;"><span>Anuluj</span></div>
 
-      <div class="optionButton" id="helpButton" style="margin-top: 330px; margin-left: 45px;text-align: center;"><span>?</span></div>
-      <div class="optionButton" id="updateSystemButton" style="margin-top: 330px; margin-left: 100px;text-align: center;"><span>&#8634;</span></div>
-      <div class="optionButton" id="privacyPolicyButton" style="margin-top: 330px; margin-left: 155px;text-align: center;"><span>&#9413;</span></div>
+      <div class="optionButton" id="helpButton" style="margin-top: 400px; margin-left: 45px;text-align: center;"><span>?</span></div>
+      <div class="optionButton" id="updateSystemButton" style="margin-top: 400px; margin-left: 100px;text-align: center;"><span>&#8634;</span></div>
+      <div class="optionButton" id="privacyPolicyButton" style="margin-top: 400px; margin-left: 155px;text-align: center;"><span>&#9413;</span></div>
       
       
-      <div class="box" style="float:left; position:absolute; width:200px; border-radius:0px 30px 30px 0px; margin-top: 50px;">  
+      <div class="box" style="float:left; position:absolute; width:200px; border-radius:0px 30px 30px 0px; margin-top: 120px;">  
         <div class="label" style="text-align: center;margin-bottom: 10px ;">Ustawienia instalacji</div>
         <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
           <span class="menuItem">Off-grid</span>
@@ -189,7 +210,7 @@
       
       
 
-      <div class="box" style="float:left; position:absolute; margin: 412px 0px 0px 0px; border-radius: 0px; width:1004px">
+      <div class="box" style="float:left; position:absolute; margin: 483px 0px 0px 0px; border-radius: 0px; width:1004px">
         Model produktu:<span id="productModel"></span><br>
         Nr Seryjny: <span id="serialNumber">Nie udało się odczytać numeru seryjnego</span><br>
         Wersja systemu: <span id="programVersion"></span><br>

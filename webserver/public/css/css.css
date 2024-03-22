@@ -125,7 +125,6 @@ input[type="number"]:focus {
     font-size: 20px;
     font-weight: bold;
     padding: 5px 0px;
-    cursor: pointer;
     transition: 0.3s;
     margin-left: 600px;
     text-align: center;
@@ -235,7 +234,6 @@ input[type="number"]:focus {
     color: beige;
     font-size: 36px;
     font-weight: bold;
-    cursor: pointer;
     transition: 0.3s;
     justify-content: center;
     align-items: center;
@@ -296,7 +294,6 @@ input[type="number"]:focus {
     color: beige;
     font-size: 20px;
     font-weight: bold;
-    cursor: pointer;
     transition: 0.3s;
     display: flex;
     justify-content: center;
@@ -314,7 +311,6 @@ input[type="number"]:focus {
     font-size: 20px;
     font-weight: bold;
     padding: 5px 0px;
-    cursor: pointer;
     transition: 0.3s;
     margin-left: 600px;
     justify-content: space-around;
@@ -337,8 +333,11 @@ input[type="number"]:focus {
 
 .driveButton:hover,
 .settingsButton:hover,
-.optionButton:hover{
+.optionButton:hover,
+.PWMValueButton:hover,
+.stopButton:hover{
   opacity: 80%;
+  cursor: pointer;
 }
 
 /* IDs */

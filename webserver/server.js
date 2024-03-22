@@ -35,6 +35,9 @@ let config = {
 http.listen(8080); //port serwera
 
 function handler (req, res) { //utwórz serwer
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+  res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
   let filePath = path.join(__dirname, 'public', req.url);
   if (req.url === '/') {
     filePath = path.join(__dirname, 'public', 'index.html');

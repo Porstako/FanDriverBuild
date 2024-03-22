@@ -11,7 +11,7 @@ document.getElementById("stop").addEventListener('click', () => fanBreak());
 //zmiana hamowania / obciązenia pwm
 function PWMFull(){ socket.emit('clientData', {type: 'PWMState',value:1});  }
 function PWMStop(){ socket.emit('clientData', {type: 'PWMState',value:2});  }
-function fanBreak(){ socket.emit('clientData', {type: 'breakToggle'});}
+function fanBreak(){ socket.emit('clientData', {type: 'breakToggle'});  }
 
 //Zapis danych z ustawień
 //funkcja wykorzystywana w js.js aby nie dodawać dwóch listenerów

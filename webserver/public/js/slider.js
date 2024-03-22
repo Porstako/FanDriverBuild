@@ -86,6 +86,7 @@ class DoubleRangeSlider extends EventTarget {
       let {trackColor, rangeColor} = this.style;
       sliderTrack.style.background = `linear-gradient(to right, ${trackColor} ${left1}, ${rangeColor} ${left1}, ${rangeColor} ${left2}, ${trackColor} ${left2})`;
     };
+    this.fillColor = fillColor;
     let init = () => {
       let overallMax = +input2.max;
       let overallMin = +input1.min;
@@ -184,5 +185,8 @@ function main(){
     outputs2[1].value = values[1];
   });
 }
+
+
+
 
 document.addEventListener('DOMContentLoaded', main);
