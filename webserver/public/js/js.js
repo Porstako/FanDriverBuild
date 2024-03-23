@@ -75,7 +75,7 @@ document.getElementById("PWM1MinPlus").addEventListener('mousedown', () => {
 });
 document.getElementById("PWM1MinPlus").addEventListener('mouseup', () => {  clearInterval(PWM1MinPlusPress);  });
 document.getElementById("PWM1MinPlus").addEventListener('mouseleave', () => {  clearInterval(PWM1MinPlusPress);  });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {
+document.getElementById("PWM1MinPlus").addEventListener('touchstart', function(e) {
   e.preventDefault();
   PWM1MinPlusPress = setInterval(() => {
     if (slider.values[0]<slider.values[1]){
@@ -86,7 +86,7 @@ document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(
     }
   }, 200);
 });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM1MinPlusPress);});
+document.getElementById("PWM1MinPlus").addEventListener('touchstart', function(e) {clearInterval(PWM1MinPlusPress);});
 
 
 //PWM1MaxMinus
@@ -110,7 +110,7 @@ document.getElementById("PWM1MaxMinus").addEventListener('mousedown', () => {
 });
 document.getElementById("PWM1MaxMinus").addEventListener('mouseup', () => {  clearInterval(PWM1MaxMinusPress); });
 document.getElementById("PWM1MaxMinus").addEventListener('mouseleave', () => {  clearInterval(PWM1MaxMinusPress); });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {
+document.getElementById("PWM1MaxMinus").addEventListener('touchstart', function(e) {
   e.preventDefault();
   PWM1MaxMinusPress = setInterval(() => {
     if (slider.values[1]>slider.values[0]){
@@ -121,7 +121,7 @@ document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(
     }
   }, 200);
 });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM1MaxMinusPress);});
+document.getElementById("PWM1MaxMinus").addEventListener('touchstart', function(e) {clearInterval(PWM1MaxMinusPress);});
 
 
 
@@ -147,7 +147,7 @@ document.getElementById("PWM1MaxPlus").addEventListener('mousedown', () => {
 document.getElementById("PWM1MaxPlus").addEventListener('mouseup', () => {  clearInterval(PWM1MaxPlusPress);  });
 document.getElementById("PWM1MaxPlus").addEventListener('mouseleave', () => {  clearInterval(PWM1MaxPlusPress);  });
 
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {
+document.getElementById("PWM1MaxPlus").addEventListener('touchstart', function(e) {
   e.preventDefault();
   PWM1MaxPlusPress = setInterval(() => {
     if (slider.values[1]<600){
@@ -158,7 +158,7 @@ document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(
     }
   }, 200);
 });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM1MaxPlusPress);})
+document.getElementById("PWM1MaxPlus").addEventListener('touchstart', function(e) {clearInterval(PWM1MaxPlusPress);})
 
 
 
@@ -189,7 +189,7 @@ document.getElementById("PWM2MinMinus").addEventListener('mouseleave', () => {
   clearInterval(PWM2MinMinusPress);
 });
 
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {
+document.getElementById("PWM2MinMinus").addEventListener('touchstart', function(e) {
   e.preventDefault();
   PWM2MinMinusPress = setInterval(() => {
     if (slider2.values[0]>0){
@@ -200,7 +200,7 @@ document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(
     }
   }, 200);
 });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM2MinMinusPress);})
+document.getElementById("PWM2MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM2MinMinusPress);})
 
 //PWM2MinPlus
 document.getElementById("PWM2MinPlus").addEventListener('click', () => {
@@ -228,7 +228,7 @@ document.getElementById("PWM2MinPlus").addEventListener('mouseleave', () => {
   clearInterval(PWM2MinPlusPress);
 });
 
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {
+document.getElementById("PWM2MinPlus").addEventListener('touchstart', function(e) {
   e.preventDefault();
   PWM2MinPlusPress = setInterval(() => {
     if (slider2.values[0]<slider2.values[1]){
@@ -239,7 +239,7 @@ document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(
     }
   }, 200);
 });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM2MinPlusPress);})
+document.getElementById("PWM2MinPlus").addEventListener('touchstart', function(e) {clearInterval(PWM2MinPlusPress);})
 
 
 //PWM2MaxMinus
@@ -268,7 +268,7 @@ document.getElementById("PWM2MaxMinus").addEventListener('mouseleave', () => {
   clearInterval(PWM2MaxMinusPress);
 });
 
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {
+document.getElementById("PWM2MaxMinus").addEventListener('touchstart', function(e) {
   e.preventDefault();
   PWM2MaxMinusPress = setInterval(() => {
     if (slider2.values[1]>slider2.values[0]){
@@ -279,7 +279,7 @@ document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(
     }
   }, 200);
 });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM2MaxMinusPress);})
+document.getElementById("PWM2MaxMinus").addEventListener('touchstart', function(e) {clearInterval(PWM2MaxMinusPress);})
 
 //PWM2MaxPlus
 document.getElementById("PWM2MaxPlus").addEventListener('click', () => {
@@ -307,7 +307,7 @@ document.getElementById("PWM2MaxPlus").addEventListener('mouseleave', () => {
   clearInterval(PWM2MaxPlusPress);
 });
 
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {
+document.getElementById("PWM2MaxPlus").addEventListener('touchstart', function(e) {
   e.preventDefault();
   PWM2MaxPlusPress = setInterval(() => {
     if (slider2.values[1]<600){
@@ -318,7 +318,7 @@ document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(
     }
   }, 200);
 });
-document.getElementById("PWM1MinMinus").addEventListener('touchstart', function(e) {clearInterval(PWM2MaxPlusPress);})
+document.getElementById("PWM2MaxPlus").addEventListener('touchstart', function(e) {clearInterval(PWM2MaxPlusPress);})
 
 // funkcja do przejścia Strona główna <--> Menu
 function menuToggle(){
