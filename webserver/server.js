@@ -25,7 +25,7 @@ let config = {
   PWM1Min:200,
   PWM1Max:300,
   PWM2Min:300,
-  PWM2Max:700,
+  PWM2Max:550,
   PWMStop:false,
   PWMFull:false,
   sweptDiameter:630,

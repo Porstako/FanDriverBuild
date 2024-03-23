@@ -92,5 +92,12 @@ socket.on('config', (data) =>{
     document.getElementById("PWM2Max").textContent=data.PWM2Max;
     slider.fillColor();
     slider2.fillColor();
+
+    if (data.offGrid === true){
+      document.getElementById("offGridCheckBox").checked = true;
+    }
+    else if (data.offGrid === false) {
+      document.getElementById("offGridCheckBox").checked = false;
+    }
 }
 });

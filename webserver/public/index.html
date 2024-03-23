@@ -131,8 +131,8 @@
           <div class="label" style="text-align: center; font-size: 28px;font-weight: bold;">PWM1</div> 
           <div class="slider-container" id="PWM1Slider">
             <div class="slider-track"></div>
-            <input type="range" id="PWM1MinInput" name="PWM1" min="0" max="1000" step="1" value="200" autocomplete="off" />
-            <input type="range" id="PWM1MaxInput" name="PWM1" min="0" max="1000" step="1" value="300" autocomplete="off" />
+            <input type="range" id="PWM1MinInput" name="PWM1" min="0" max="600" step="1" value="200" autocomplete="off" />
+            <input type="range" id="PWM1MaxInput" name="PWM1" min="0" max="600" step="1" value="300" autocomplete="off" />
           </div>
           
           <div style="display: flex; justify-content: space-between;">
@@ -155,8 +155,8 @@
           <div class="label" style="text-align: center; font-size: 28px;font-weight: bold;">PWM2</div>
           <div class="slider-container" id="PWM2Slider">
             <div class="slider-track"></div>
-            <input type="range" id="PWM2MinInput" name="PWM2" min="0" max="1000" step="1" value="300" autocomplete="off" />
-            <input type="range" id="PWM2MaxInput" name="PWM2" min="0" max="1000" step="1" value="700" autocomplete="off" />
+            <input type="range" id="PWM2MinInput" name="PWM2" min="0" max="600" step="1" value="300" autocomplete="off" />
+            <input type="range" id="PWM2MaxInput" name="PWM2" min="0" max="600" step="1" value="550" autocomplete="off" />
           </div>
           
           <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 15px;">
@@ -180,7 +180,7 @@
       <div class="optionButton" id="privacyPolicyButton" style="margin-top: 400px; margin-left: 155px;text-align: center;"><span>&#9413;</span></div>
       
       
-      <div class="box" style="float:left; position:absolute; width:200px; border-radius:0px 30px 30px 0px; margin-top: 120px;">  
+      <div class="box" style="float:left; position:absolute; width:200px; border-radius:0px 30px 30px 0px; margin-top: 180px;">  
         <div class="label" style="text-align: center;margin-bottom: 10px ;">Ustawienia instalacji</div>
         <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
           <span class="menuItem">Off-grid</span>
@@ -189,13 +189,7 @@
             <span class="switchRound"></span>
           </label>
         </div>
-        <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
-          <span class="menuItem">Akumulator</span><label class="switch">
-            <input type="checkbox" id="AkumulatorCheckBox">
-            <span class="switchRound"></span>
-          </label>
-        </div>
-        <div class="label" style="text-align: center;margin-bottom: 10px; margin-top: 15px;">Ustawienia instalacji</div>
+        
         <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
           <span class="menuItem">Średnica</span><input type="number" class="menuNumericInput" id="sweptDiameter" step="0.1" value="630" placeholder="1234">
           </label>
