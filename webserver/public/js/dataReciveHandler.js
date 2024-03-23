@@ -14,10 +14,6 @@ socket.on('pythonData', (data) => {
       document.getElementById('Amper').textContent = data.value;
     } else if(data.type === 'watt') {
       document.getElementById('Watt').textContent = data.value;
-    } else if(data.type === 'PWM1Percentage'){
-      document.getElementById('PWM1Percentage').textContent = data.value;
-      let x = 0.5 + (data.value*0.005);
-      document.getElementById('PWM1GaugeNotFill').style.transform = `rotate(${x}turn)`;
     } else if(data.type === 'PWM2Percentage'){
       document.getElementById('PWM2Percentage').textContent = data.value;
       let x = 0.5 + (data.value*0.005);
