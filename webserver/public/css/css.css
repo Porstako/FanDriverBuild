@@ -355,6 +355,10 @@ input[type="number"]:focus {
 #kWhStats{
     font-size: 18px;
     color:beige;
+    background-image: url("../resources/AS_logo.png")  !important;
+    background-size:200px 200px ;
+    background-repeat: no-repeat;
+    background-position: 0px;
 }
 
 #menuDisplay{
