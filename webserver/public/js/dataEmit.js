@@ -24,7 +24,8 @@ function PWMSubmit()
     PWM2Max: document.getElementById("PWM2Max").textContent,
     offGrid: document.getElementById('offGridCheckBox').checked,  
     sweptDiameter: document.getElementById('sweptDiameter').valueAsNumber, 
-    powerCoefficient: document.getElementById('powerCoefficient').valueAsNumber
+    powerCoefficient: document.getElementById('powerCoefficient').valueAsNumber,
+    sweepSpeedIndex: document.getElementById('sweepSpeedIndex').valueAsNumber
     });
 }
 

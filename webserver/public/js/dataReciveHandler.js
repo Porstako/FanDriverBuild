@@ -64,7 +64,10 @@ socket.on('pythonData', (data) => {
       document.getElementById('kWhValue_24H').textContent = data.value;
       document.getElementById('kWhValue_30D').textContent = data.value;
       document.getElementById('kWhValue_OVERALL').textContent = data.value;
+    } else if (data.type === 'sweepSpeed'){
+      document.getElementById('sweepSpeed').textContent = data.value;
     }
+
   }
 });
 
