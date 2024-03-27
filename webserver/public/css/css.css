@@ -116,13 +116,14 @@ input[type="number"]:focus {
 .diodeRed{background: radial-gradient(#ff000030, #ff000040);}
 
 .driveButton{
-    width: 68px;
-    max-height: 45px;
+    width: 86px;
+    max-height: 54px;
+    height: 54px;
     background: linear-gradient(220deg, #007cef 20%, #54FF65 80%);
     border-radius: 15px;
     position:absolute;
     color: beige;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     padding: 5px 0px;
     transition: 0.3s;
@@ -301,14 +302,14 @@ input[type="number"]:focus {
 }
 
 .stopButton{
-    width: 68px;
-    max-height: 45px;
-    height: 45px;
+    width: 86px;
+    max-height: 54px;
+    height: 54px;
     background: linear-gradient(220deg, #ef0000 20%, #ff5454 80%);
     border-radius: 15px;
     position:absolute;
     color: beige;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: bold;
     padding: 5px 0px;
     transition: 0.3s;
