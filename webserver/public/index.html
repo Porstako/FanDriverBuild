@@ -54,22 +54,24 @@
           </div>
         </div>
       </div>
-      <div class="box" id="PWMStatus" style="max-width: 140px; margin-top: 65px; padding: 10px 15px 15px 50px; margin-left: -40px">
-        <span class="label" style="font-weight: bold;">PWM</span>
+      <div class="box" id="PWMStatus" style="max-width: 290px; margin-top: 65px; padding: 10px 15px 15px 50px; margin-left: -40px">
+        <span class="label" style="font-weight: bold;">Status grzałki</span>
         
         <div class="boxContent">
           <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM2GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM2Percentage">0</span><span>%</span></div></div>
+          <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM2GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM2Percentage">0</span><span>&#176;C</span></div></div>
         </div>
+        
+        
       </div>
-      <div class="box" id="kWhStats" style="float: right; width:180px; height: 134px; border-radius:30px 30px 30px 30px; margin-top: -154px; margin-right: 385px;">  
+      
+      <div class="box" id="kWhStats" style="float: right; width:180px; height: 134px; border-radius:30px 30px 30px 30px; margin-top: -154px; margin-right: 225px;">  
         <span class="label" style="font-weight: bold;font-size: 32px;">Statystyki</span>
         <div class="kWhStatsRow">24h: <span id="kWhValue_24H">0.00</span> kWh</div>
         <div class="kWhStatsRow">30 dni: <span id="kWhValue_30D">0.00</span> kWh</div>
         <div class="kWhStatsRow">Ogółem: <span id="kWhValue_OVERALL">0.00</span> kWh</div>
       </div>
-      <div class="driveButton" id="PWMFull" style="margin: -110px 0 0 430px;"><span>PWM<br>100%</span></div>
-      <div class="driveButton" id="PWMStop" style="margin: -110px 0 0 530px;"><span>PWM<br>0%</span></div>
-      <div class="stopButton" id="stop" style="margin: -110px 0 0 630px;"><span>STOP</span></div>
+      <div class="stopButton" id="stop" style="margin: -140px 0 0 595px;"><span>STOP</span></div>
     </div>
 
 
@@ -186,7 +188,7 @@
         <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
           <span class="menuItem">Off-grid</span>
           <label class="switch">
-            <input type="checkbox" id="offGridCheckBox">
+            <input type="checkbox" id="offGridCheckBox" checked="false">
             <span class="switchRound"></span>
           </label>
         </div>

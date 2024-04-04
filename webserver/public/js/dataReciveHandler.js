@@ -54,10 +54,10 @@ socket.on('pythonData', (data) => {
     } else if (data.type === 'windSpeed'){
       document.getElementById('windSpeed').textContent = data.value;
       if (data.value>1) {
-        document.getElementById('windSpeedGreenDiode').style.background = 'radial-gradient(#00ff00ff, #ff000040)';
+        document.getElementById('windSpeedGreenDiode').style.background = 'radial-gradient(#00ff00ff, #00ff0040)';
         document.getElementById('windSpeedRedDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
       } else {
-        document.getElementById('windSpeedGreenDiode').style.background = 'radial-gradient(#00ff0030, #ff000040)';
+        document.getElementById('windSpeedGreenDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
         document.getElementById('windSpeedRedDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
       }
     } else if (data.type === 'kWh'){
@@ -66,6 +66,15 @@ socket.on('pythonData', (data) => {
       document.getElementById('kWhValue_OVERALL').textContent = data.value;
     } else if (data.type === 'sweepSpeed'){
       document.getElementById('sweepSpeed').textContent = data.value;
+      if (data.value>10){
+        document.getElementById('sweepSpeedGreenDiode').style.background = 'radial-gradient(#00ff00ff, #00ff0040)';
+        document.getElementById('sweepSpeedRedDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
+      } else{
+        document.getElementById('sweepSpeedGreenDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
+        document.getElementById('sweepSpeedRedDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
+      }
+      
+      
     }
 
   }
@@ -98,5 +107,6 @@ socket.on('config', (data) =>{
     else if (data.offGrid === false) {
       document.getElementById("offGridCheckBox").checked = false;
     }
+    console.log('offgrid:', data.offGrid);
 }
 });

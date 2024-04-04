@@ -302,16 +302,16 @@ input[type="number"]:focus {
 }
 
 .stopButton{
-    width: 86px;
-    max-height: 54px;
-    height: 54px;
+    width: 120px;
+    max-height: 120px;
+    height: 120px;
     background: linear-gradient(220deg, #ef0000 20%, #ff5454 80%);
-    border-radius: 15px;
+    border-radius: 50%;
     position:absolute;
     color: beige;
     font-size: 22px;
     font-weight: bold;
-    padding: 5px 0px;
+    padding: 0px;
     transition: 0.3s;
     margin-left: 600px;
     justify-content: space-around;

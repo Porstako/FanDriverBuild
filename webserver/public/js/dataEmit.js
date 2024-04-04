@@ -4,13 +4,9 @@
     Funkcja zawiera wszystkie skrypty do wysyłu danych z klienta przeglądarki na serwer
 */
 
-document.getElementById("PWMFull").addEventListener('click', () => PWMFull());
-document.getElementById("PWMStop").addEventListener('click', () => PWMStop());
 document.getElementById("stop").addEventListener('click', () => fanBreak());
 
 //zmiana hamowania / obciązenia pwm
-function PWMFull(){ socket.emit('clientData', {type: 'PWMState',value:1});  }
-function PWMStop(){ socket.emit('clientData', {type: 'PWMState',value:2});  }
 function fanBreak(){ socket.emit('clientData', {type: 'breakToggle'});  }
 
 //Zapis danych z ustawień

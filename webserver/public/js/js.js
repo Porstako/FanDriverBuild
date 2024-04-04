@@ -12,9 +12,7 @@ document.addEventListener('contextmenu', function(event) {
 });
 
 
-
 //przyciski + i -
-
 
 //PWM1MinMinus
 document.getElementById("PWM1MinMinus").addEventListener('click', () => {
