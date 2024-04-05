@@ -5,33 +5,11 @@
     <link rel="stylesheet" href="css/slider.css">
     <link rel="stylesheet" href="css/switch.css">
     <meta charset="utf-8">
-    
-
-    
   </head>
   <body>
     <div class="container" id="mainDisplay" style="display: block;">
-      <div class="box" style="float:right; padding: 10px 10px 10px 10px; font-size: 22px; margin-top: 380px; border-radius: 30px 0px 0px 0px; width:240px">
-        <div style="margin-bottom: 10px;"><div class="diode diodeGreen" id="sweepSpeedGreenDiode"></div><div class="diode diodeRed" id="sweepSpeedRedDiode" style="margin-right: 10px;"></div><span class="label"> Obroty:</span><span class="value" id="sweepSpeed" style="position: static;"> 400</span><span class="value">/min</span></div>
-        <div style="margin-bottom: 10px;"><div class="diode diodeGreen" id="windSpeedGreenDiode"></div><div class="diode diodeRed" id="windSpeedRedDiode" style="margin-right: 10px;"></div><span class="label"> Wiatr:</span><span class="value" id="windSpeed" style="position: static;"> 11.1</span><span class="value">m/s</span></div>
-        <div style="margin-bottom: 10px;"><div class="diode diodeGreen" id="lineVoltageGreenDiode"></div><div class="diode diodeRed" id="lineVoltageRedDiode" style="margin-right: 10px;"></div><span class="label"> Sieć:</span><span class="value" id="lineVoltage" style="position: static;"> 230</span><span class="value">V</span></div>
-        
-        <div style="display:flex; justify-content: space-around;">
-          <div class="diode diodeGreen" id="PWMAutoDiode"></div> 
-          <div class="diode diodeRed" id="PWMFullDiode"></div>
-          <div class="diode diodeRed" id="PWMStopDiode"></div>  
-          <div class="diode diodeRed" id="overloadDiode"></div> 
-        </div>
 
-        <div style="display:flex; justify-content: space-around;">
-          <div class="diodeLabel" style="margin-left: -2px;"><span>&#9398;</span></div>
-          <div class="diodeLabel" style="margin-left: -2px;"><span>&#8679;</span></div>
-          <div class="diodeLabel" style="margin-left: 1px;"><span>&#8681;</span></div>
-          <div class="diodeLabel" style="margin-right: -4px;"><span>&#9888;</span></div>
-        </div>
-      </div>
-
-      <div id="menuButton" class="menuButton" style="float: right; border-radius: 0% 0% 0% 100%; margin-right: -260px;"><div class="menuButtonIcon"><span style="margin-left: 23px;">&#9776;</span></div></div>    
+      <div id="menuButton" class="menuButton" style="float: right; border-radius: 0% 0% 0% 100%; margin-right: 0px;"><div class="menuButtonIcon"><span style="margin-left: 23px;">&#9776;</span></div></div>    
       
       <div class="box" id="mainValuesDisplay" >
         <div class="boxContent">
@@ -54,24 +32,59 @@
           </div>
         </div>
       </div>
-      <div class="box" id="PWMStatus" style="max-width: 290px; margin-top: 65px; padding: 10px 15px 15px 50px; margin-left: -40px">
-        <span class="label" style="font-weight: bold;">Status grzałki</span>
+
+      <div class="box" id="PWMStatus" style="max-width: 140px; margin-top: -180px; padding: 10px 15px 15px 50px; margin-left: -40px">
+        <span class="label" style="font-weight: bold;">Zwoje</span>
         
-        <div class="boxContent">
+        <div class="boxContent" style="display: block;">
+          <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="turbineTemperatureGaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="turbineTemperature">0</span><span>&#176;C</span></div></div>
+        </div>      
+      </div>
+
+      <div class="box" id="PWMStatus" style="max-width: 140px; margin-top:10px ;padding: 10px 15px 15px 50px; margin-left: -40px">
+        <span class="label" style="font-weight: bold;">Grzałka</span>
+        
+        <div class="boxContent" style="display: block;">
           <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM2GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM2Percentage">0</span><span>%</span></div></div>
-          <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="PWM2GaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="PWM2Percentage">0</span><span>&#176;C</span></div></div>
+          <div class="valueObject"><div class="gauge"><div class="gaugeNotFill" id="temperatureGaugeNotFill"></div></div><div class="value" style="margin-top: -40px; margin-left: 40px;"><span id="temperature">0</span><span>&#176;C</span></div></div>
         </div>
-        
-        
       </div>
       
-      <div class="box" id="kWhStats" style="float: right; width:180px; height: 134px; border-radius:30px 30px 30px 30px; margin-top: -154px; margin-right: 225px;">  
+      <div class="box" id="kWhStats" style="float: right; width:180px; height: 134px; border-radius:30px 30px 30px 30px; margin-top: -154px; margin-right: 635px;">  
         <span class="label" style="font-weight: bold;font-size: 32px;">Statystyki</span>
         <div class="kWhStatsRow">24h: <span id="kWhValue_24H">0.00</span> kWh</div>
         <div class="kWhStatsRow">30 dni: <span id="kWhValue_30D">0.00</span> kWh</div>
         <div class="kWhStatsRow">Ogółem: <span id="kWhValue_OVERALL">0.00</span> kWh</div>
       </div>
-      <div class="stopButton" id="stop" style="margin: -140px 0 0 595px;"><span>STOP</span></div>
+      <div class="stopButton" id="stop" style="margin: -140px 0 0 450px;"><span>STOP</span></div>
+
+      <div class="box" style="float:right; padding: 10px 10px 10px 10px; font-size: 22px; margin-top: -220px; border-radius: 30px 0px 0px 30px; width:140px; height: 100px;" >
+        <div style="margin-bottom: 10px;"><span class="label"> Wiatr:</span><span class="value" id="windSpeed" style="position: static;"> 11.1</span><span class="value">m/s</span></div>
+      </div>
+
+      <div class="box" style="float:right; padding: 10px 10px 10px 10px; font-size: 22px; margin-top: -90px; border-radius: 30px 0px 0px 0px; width:140px">
+        <div style="margin-bottom: 10px;"><div class="diode diodeRed" id="lineVoltageRedDiode" style="margin-right: 10px;"></div><span class="label"> Sieć:</span><span class="value" id="lineVoltage" style="position: static;"> 230</span><span class="value">V</span></div>
+        
+        <div style="display:flex; justify-content: space-around;">
+          <div class="diode diodeGreen" id="PWMAutoDiode"></div> 
+          <div class="diode diodeRed" id="PWMFullDiode"></div>
+          <div class="diode diodeRed" id="PWMStopDiode"></div>  
+          <div class="diode diodeRed" id="overloadDiode"></div> 
+        </div>
+
+        <div style="display:flex; justify-content: space-around;">
+          <div class="diodeLabel" style="margin-left: -2px;"><span>&#9398;</span></div>
+          <div class="diodeLabel" style="margin-left: -2px;"><span>&#8679;</span></div>
+          <div class="diodeLabel" style="margin-left: 1px;"><span>&#8681;</span></div>
+          <div class="diodeLabel" style="margin-right: -4px;"><span>&#9888;</span></div>
+        </div>
+      </div>
+      <div class="box" id="sweepSpeedBox" style="float:right; padding: 10px 10px 10px 10px; font-size: 22px; margin-top: -160px; margin-right: 15px; border-radius: 30px 30px 0px 0px; width:150px; height: 160px;">
+        <img src="resources/Turbine.gif" style="width: 100px; height: 100px;margin: 0px 0px 0px 25px;">
+        <div style="margin-bottom: 10px; text-align: center;"><span class="value" id="sweepSpeed" style="position: static;">400</span><br><span class="value" style="position: static; font-size: 18px;"> obr./min</span>
+        
+        </div>
+      </div>
     </div>
 
 

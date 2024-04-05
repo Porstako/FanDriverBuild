@@ -305,7 +305,7 @@ input[type="number"]:focus {
     width: 120px;
     max-height: 120px;
     height: 120px;
-    background: linear-gradient(220deg, #ef0000 20%, #ff5454 80%);
+    background: radial-gradient( #ef4040 10%, #ef0000 20%, #Bf0000 57%,#Bf0000 60%,#ef0000 75%);
     border-radius: 50%;
     position:absolute;
     color: beige;
@@ -356,10 +356,7 @@ input[type="number"]:focus {
 #kWhStats{
     font-size: 18px;
     color:beige;
-    background-image: url("../resources/AS_logo.png")  !important;
-    background-size:200px 200px ;
-    background-repeat: no-repeat;
-    background-position: 0px;
+    
 }
 
 #menuDisplay{
@@ -380,15 +377,22 @@ input[type="number"]:focus {
 
 #mainValuesDisplay{
     font-size: 32px;
-    width: 700px;
+    width: 690px;
     max-height: 280px;
     margin:auto;
-    padding: 20px 40px;
+    padding: 20px 20px;
     text-align: center;
 }
 
 #PWMStatus{
     font-size: 32px;
+}
+
+#mainDisplay{
+    background-image: url("../resources/AS_logo.png")  !important;
+    background-size:200px 200px ;
+    background-repeat: no-repeat;
+    background-position: -25px -25px;
 }
 
 
