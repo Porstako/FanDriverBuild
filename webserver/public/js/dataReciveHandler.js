@@ -5,6 +5,10 @@
 //Plik który odbiera dane z serwera i wyświetla je w przglądarce
 const socket = io();
 
+//zmienne globalne
+let rpm=20;
+let roundDegree=0;
+
 // odbior danych "pythonData" //
 socket.on('pythonData', (data) => {
   if(data.type && data.value !== undefined) {
@@ -39,10 +43,8 @@ socket.on('pythonData', (data) => {
       document.getElementById('lineVoltage').textContent = data.value;
       if (data.value>252 || data.value<100){
         document.getElementById('lineVoltageRedDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
-        document.getElementById('lineVoltageGreenDiode').style.background = 'radial-gradient(#00ff0030, #ff000040)';
       } else {
         document.getElementById('lineVoltageRedDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-        document.getElementById('lineVoltageGreenDiode').style.background = 'radial-gradient(#00ff00ff, #ff000040)';
       }
     } else if (data.type === 'overload'){
       if (data.value == 1){
@@ -53,30 +55,18 @@ socket.on('pythonData', (data) => {
       }
     } else if (data.type === 'windSpeed'){
       document.getElementById('windSpeed').textContent = data.value;
-      if (data.value>1) {
-        document.getElementById('windSpeedGreenDiode').style.background = 'radial-gradient(#00ff00ff, #00ff0040)';
-        document.getElementById('windSpeedRedDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-      } else {
-        document.getElementById('windSpeedGreenDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
-        document.getElementById('windSpeedRedDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
-      }
     } else if (data.type === 'kWh'){
       document.getElementById('kWhValue_24H').textContent = data.value;
       document.getElementById('kWhValue_30D').textContent = data.value;
       document.getElementById('kWhValue_OVERALL').textContent = data.value;
     } else if (data.type === 'sweepSpeed'){
       document.getElementById('sweepSpeed').textContent = data.value;
-      if (data.value>10){
-        document.getElementById('sweepSpeedGreenDiode').style.background = 'radial-gradient(#00ff00ff, #00ff0040)';
-        document.getElementById('sweepSpeedRedDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-      } else{
-        document.getElementById('sweepSpeedGreenDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
-        document.getElementById('sweepSpeedRedDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
-      }
-      
-      
+      rpm=data.value;  
+    } else if (data.type === 'maxTemperature'){
+      document.getElementById('temperatureInput').value = data.value;
+      document.getElementById('temperatureOutput').textContent = data.value;
+      temperatureFillColor();
     }
-
   }
 });
 
@@ -101,12 +91,13 @@ socket.on('config', (data) =>{
     slider.fillColor();
     slider2.fillColor();
 
-    if (data.offGrid === true){
+    if (data.onGrid === true){
       document.getElementById("offGridCheckBox").checked = true;
     }
-    else if (data.offGrid === false) {
+    else if (data.onGrid === false) {
       document.getElementById("offGridCheckBox").checked = false;
     }
-    console.log('offgrid:', data.offGrid);
+
+  offGridOnGridSettingsChange()
 }
 });

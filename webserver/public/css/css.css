@@ -28,6 +28,10 @@ body{
     color:#007cef;
     font-family: 'Montserrat';
     margin:0px;
+    -webkit-user-select: none; 
+    -moz-user-select: none;   
+    -ms-user-select: none;     
+    user-select: none;         
 }
 
 /* Wywalenie przycisków Góra dół z inputów numerycznych */
@@ -133,8 +137,8 @@ input[type="number"]:focus {
 
 .gauge{
     position: relative;
-    width: 140px;
-    height: 70px;
+    width: 100px;
+    height: 50px;
     border-top-left-radius: 100% 200%;
     border-top-right-radius: 100% 200%;
     text-align: left;
@@ -301,6 +305,18 @@ input[type="number"]:focus {
     align-items: center;
 }
 
+.sideBar
+{
+    font-size: 24px;
+}
+
+.sideBarValue
+{
+    margin-top: -27px; 
+    text-align: center; 
+    width:100px;
+}
+
 .stopButton{
     width: 120px;
     max-height: 120px;
@@ -395,6 +411,17 @@ input[type="number"]:focus {
     background-position: -25px -25px;
 }
 
+#sweepSpeedImage
+{
+    transition: transform 0.5s;
+}
+#windSpeedBox
+{
+    background-image: url("../resources/windIcon.png");
+    background-size:100px 100px ;
+    background-repeat: no-repeat;
+    background-position: center;
+}
 
 
 

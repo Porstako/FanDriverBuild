@@ -18,10 +18,11 @@ function PWMSubmit()
     PWM1Max: document.getElementById("PWM1Max").textContent, 
     PWM2Min: document.getElementById("PWM2Min").textContent, 
     PWM2Max: document.getElementById("PWM2Max").textContent,
-    offGrid: document.getElementById('offGridCheckBox').checked,  
+    onGrid: document.getElementById('offGridCheckBox').checked,  
     sweptDiameter: document.getElementById('sweptDiameter').valueAsNumber, 
     powerCoefficient: document.getElementById('powerCoefficient').valueAsNumber,
-    sweepSpeedIndex: document.getElementById('sweepSpeedIndex').valueAsNumber
+    sweepSpeedIndex: document.getElementById('sweepSpeedIndex').valueAsNumber,
+    maxTemperature: document.getElementById('temperatureInput').valueAsNumber
     });
 }
 

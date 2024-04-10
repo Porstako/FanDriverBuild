@@ -186,7 +186,16 @@ function main(){
   });
 }
 
+function temperatureFillColor(){  
+  const progress = (document.getElementById('temperatureInput').value/ document.getElementById('temperatureInput').max) * 100;
+  document.getElementById('temperatureInput').style.background = `linear-gradient(to right, #30c79f ${progress}%, #124d3d ${progress}%)`;
+}
 
 
+document.getElementById('temperatureInput').addEventListener('input', () =>{
+  document.getElementById('temperatureOutput').innerHTML = document.getElementById('temperatureInput').value;
+  temperatureFillColor();
+});
 
+document.getElementById('temperatureOutput').innerHTML = document.getElementById('temperatureInput').value;
 document.addEventListener('DOMContentLoaded', main);

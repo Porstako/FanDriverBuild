@@ -2,6 +2,9 @@
 
 // Główny plik JS strony, czysto frontendowy. Nie odpowiada za żadną transmisję danych
 
+//zmienne
+let lastTime=0;
+
 // Oczekiwanie na kliknięcie
 document.getElementById("menuButton").addEventListener('click', () => menuToggle());
 document.getElementById("menuButton2").addEventListener('click', () => menuToggle());
@@ -11,8 +14,82 @@ document.addEventListener('contextmenu', function(event) {
   event.preventDefault();
 });
 
+//obrot animacja
+function obrot(timestamp){
+  const dt= timestamp - lastTime;
+  roundDegree+=rpm * 6 * (dt/1000);
+  document.getElementById('sweepSpeedImage').style.transform = `rotate(${roundDegree}deg)`;
+  requestAnimationFrame(obrot);
+  lastTime=timestamp;
+}
+requestAnimationFrame(obrot);
+
+//zmiany offgrid - ongrid
+
+function offGridOnGridSettingsChange(){
+  if (document.getElementById('offGridCheckBox').checked){
+    document.getElementById('PWM1SliderBox').style.display = 'block';
+    document.getElementById('temperatureSliderBox').style.display = 'none';
+    document.getElementById('offGridOnGridLabel').textContent = "On-Grid"
+  }
+  else{
+    document.getElementById('PWM1SliderBox').style.display = 'none';
+    document.getElementById('temperatureSliderBox').style.display = 'block';
+    document.getElementById('offGridOnGridLabel').textContent = "Off-Grid";
+  }
+}
+offGridOnGridSettingsChange();
+temperatureFillColor();
+document.getElementById('offGridCheckBox').addEventListener('change', () => offGridOnGridSettingsChange());
+
 
 //przyciski + i -
+
+//temperatura minus
+
+document.getElementById('temperatureMinus').addEventListener('click',() => {
+  if (document.getElementById('temperatureInput').value>0){
+    document.getElementById('temperatureInput').value = Number(document.getElementById('temperatureInput').value) - 1;
+    document.getElementById('temperatureOutput').textContent = Number(document.getElementById('temperatureOutput').textContent) - 1;
+    temperatureFillColor();
+  }
+});
+
+document.getElementById('temperatureMinus').addEventListener('mousedown',() => {
+  temperatureMinusPress = setInterval(() => {
+    if (document.getElementById('temperatureInput').value>0){
+      document.getElementById('temperatureInput').value = Number(document.getElementById('temperatureInput').value) - 1;
+      document.getElementById('temperatureOutput').textContent = Number(document.getElementById('temperatureOutput').textContent) - 1;
+      temperatureFillColor();
+    }
+  }, 200)
+});
+
+document.getElementById("temperatureMinus").addEventListener('mouseup', () => {clearInterval(temperatureMinusPress);});
+document.getElementById("temperatureMinus").addEventListener('mouseleave', () => {clearInterval(temperatureMinusPress);});
+
+
+//temperatura Plus
+document.getElementById('temperaturePlus').addEventListener('click',() => {
+  if (document.getElementById('temperatureInput').value<90){
+    document.getElementById('temperatureInput').value = Number(document.getElementById('temperatureInput').value) + 1;
+    document.getElementById('temperatureOutput').textContent = Number(document.getElementById('temperatureOutput').textContent) + 1;
+    temperatureFillColor();
+  }
+});
+
+document.getElementById('temperaturePlus').addEventListener('mousedown',() => {
+  temperaturePlusPress = setInterval(() => {
+    if (document.getElementById('temperatureInput').value<90){
+      document.getElementById('temperatureInput').value = Number(document.getElementById('temperatureInput').value) + 1;
+      document.getElementById('temperatureOutput').textContent = Number(document.getElementById('temperatureOutput').textContent) + 1;
+      temperatureFillColor();
+    }
+  }, 200)
+});
+
+document.getElementById("temperaturePlus").addEventListener('mouseup', () => {clearInterval(temperaturePlusPress);});
+document.getElementById("temperaturePlus").addEventListener('mouseleave', () => {clearInterval(temperaturePlusPress);});
 
 //PWM1MinMinus
 document.getElementById("PWM1MinMinus").addEventListener('click', () => {

@@ -1,41 +1,42 @@
-<html>
-    <head>
-        <script src="chartsLoader.js"></script>
-        <script>
-          google.charts.load('current', {packages: ['corechart'], language:'pl'},);
-          function drawChart(){
-            var data = new google.visualization.DataTable();
-            data.addColumn('date', 'r.');
-            data.addColumn('number', 'ZŁ');
-            data.addRows([
-            [new Date(2008, 0, 1), 1079],
-            [new Date(2008, 1, 11), 2312],
-            [new Date(2008, 2, 11), 11897],
-            [new Date(2008, 5, 15), 29808],
-            [new Date(2008, 6, 11), 21998],
-            [new Date(2008, 7, 12), 25221],
-            [new Date(2008, 8, 24), 22300],
-            [new Date(2009, 1, 1), 30100]]);
+<!DOCTYPE html>
+<div id="container"></div>
+<script src="js/d3.js"></script>
+<script type="module">
 
-            new google.visualization.LineChart(document.getElementById('visualization')).
-            draw(data,
-                 {title: "Japanese Locale",
-                  width:400, height:240,
-                  legend:'none',
-                  legend:'none',
-                  strictFirstColumnType: true,
-                  hAxis: {title: "Wygenerowany prąd w miesiącach", format:'MMM yy'},
-                  vAxis: {title: "Prąd"}}
-            );
+// Declare the chart dimensions and margins.
+const width = 640;
+const height = 400;
+const marginTop = 20;
+const marginRight = 20;
+const marginBottom = 30;
+const marginLeft = 40;
 
-          }
-          google.charts.setOnLoadCallback(drawChart);
-          
-        </script>
+// Declare the x (horizontal position) scale.
+const x = d3.scaleUtc()
+    .domain([new Date("2023-01-01"), new Date("2024-01-01")])
+    .range([marginLeft, width - marginRight]);
 
-    </head>
-    <body>
-      <div id="visualization" style="width: 400px; height: 240px;"></div>
-    </body>
+// Declare the y (vertical position) scale.
+const y = d3.scaleLinear()
+    .domain([0, 100])
+    .range([height - marginBottom, marginTop]);
 
-</html>
+// Create the SVG container.
+const svg = d3.create("svg")
+    .attr("width", width)
+    .attr("height", height);
+
+// Add the x-axis.
+svg.append("g")
+    .attr("transform", `translate(0,${height - marginBottom})`)
+    .call(d3.axisBottom(x));
+
+// Add the y-axis.
+svg.append("g")
+    .attr("transform", `translate(${marginLeft},0)`)
+    .call(d3.axisLeft(y));
+
+// Append the SVG element.
+container.append(svg.node());
+
+</script>
