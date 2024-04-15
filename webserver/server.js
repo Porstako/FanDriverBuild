@@ -87,23 +87,17 @@ io.sockets.on('connection', function (socket) {
 
   //Dane wyslane z clienta pythona
   socket.on('pythonData', (data) => {
-    if(data.type !== undefined) {
-      io.emit('pythonData', data);
-    }
+    io.emit('pythonData', data);
   });
 
   //Dane config
   socket.on('config', (data) =>{
-    if(data.type !== undefined) {
-      io.emit('config', data);
-      config=data;
-    }
-  })
+    io.emit('config', data);
+    config=data;
+  });
 
   //Dane wyslane z clienta przeglądarki
   socket.on('clientData', (data) =>{
-    if(data.type !== undefined) {
-      io.emit('clientData', data);
-    }
-  })
+    io.emit('clientData', data);
+  });
 });

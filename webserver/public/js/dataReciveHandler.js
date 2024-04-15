@@ -11,63 +11,49 @@ let roundDegree=0;
 
 // odbior danych "pythonData" //
 socket.on('pythonData', (data) => {
-  if(data.type && data.value !== undefined) {
-    if(data.type === 'volt') {
-      document.getElementById('Volt').textContent = data.value;
-    } else if(data.type === 'amper') {
-      document.getElementById('Amper').textContent = data.value;
-    } else if(data.type === 'watt') {
-      document.getElementById('Watt').textContent = data.value;
-    } else if(data.type === 'PWM2Percentage'){
-      document.getElementById('PWM2Percentage').textContent = data.value;
-      let x = 0.5 + (data.value*0.005);
-      document.getElementById('PWM2GaugeNotFill').style.transform = `rotate(${x}turn)`;
-    } else if(data.type === 'PWMValue'){
-      // Obsługa diod na podstawie danych wracających
-      if (data.value === 1){
-        document.getElementById('PWMFullDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
-        document.getElementById('PWMStopDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-        document.getElementById('PWMAutoDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
-      } else if(data.value === 2){
-        document.getElementById('PWMFullDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-        document.getElementById('PWMStopDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
-        document.getElementById('PWMAutoDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
-      } else{
-        document.getElementById('PWMFullDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-        document.getElementById('PWMStopDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-        document.getElementById('PWMAutoDiode').style.background = 'radial-gradient(#00ff00ff, #00ff0040)';
-      }
-    } else if (data.type === 'serialNumber'){
-      document.getElementById('serialNumber').textContent = data.value;
-    } else if (data.type === 'lineVoltage'){
-      document.getElementById('lineVoltage').textContent = data.value;
-      if (data.value>252 || data.value<100){
-        document.getElementById('lineVoltageRedDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
-      } else {
-        document.getElementById('lineVoltageRedDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-      }
-    } else if (data.type === 'overload'){
-      if (data.value == 1){
-        document.getElementById('overloadDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
-      }
-      else {
-        document.getElementById('overloadDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
-      }
-    } else if (data.type === 'windSpeed'){
-      document.getElementById('windSpeed').textContent = data.value;
-    } else if (data.type === 'kWh'){
-      document.getElementById('kWhValue_24H').textContent = data.value;
-      document.getElementById('kWhValue_30D').textContent = data.value;
-      document.getElementById('kWhValue_OVERALL').textContent = data.value;
-    } else if (data.type === 'sweepSpeed'){
-      document.getElementById('sweepSpeed').textContent = data.value;
-      rpm=data.value;  
-    } else if (data.type === 'maxTemperature'){
-      document.getElementById('temperatureInput').value = data.value;
-      document.getElementById('temperatureOutput').textContent = data.value;
-      temperatureFillColor();
-    }
+  document.getElementById('Volt').textContent = data.volt;
+  document.getElementById('Amper').textContent = data.amper;
+  document.getElementById('Watt').textContent = data.watt;
+  document.getElementById('PWM2Percentage').textContent = data.PWM2Percentage;
+  let x = 0.5 + (data.PWM2Percentage*0.005);
+  document.getElementById('PWM2GaugeNotFill').style.transform = `rotate(${x}turn)`;
+  if (data.PWMValue === 1){
+    document.getElementById('PWMFullDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
+    document.getElementById('PWMStopDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
+    document.getElementById('PWMAutoDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
+  } else if(data.PWMValue === 2){
+    document.getElementById('PWMFullDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
+    document.getElementById('PWMStopDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
+    document.getElementById('PWMAutoDiode').style.background = 'radial-gradient(#00ff0030, #00ff0040)';
+  } else{
+    document.getElementById('PWMFullDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
+    document.getElementById('PWMStopDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
+    document.getElementById('PWMAutoDiode').style.background = 'radial-gradient(#00ff00ff, #00ff0040)';
   }
+  document.getElementById('lineVoltage').textContent = data.lineVoltage;
+  if (data.lineVoltage>252 || data.lineVoltage<100){
+    document.getElementById('lineVoltageRedDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
+  } else {
+    document.getElementById('lineVoltageRedDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
+  }
+  if (data.overload == 1){
+    document.getElementById('overloadDiode').style.background = 'radial-gradient(#ff0000ff, #ff000040)';
+  }
+  else {
+    document.getElementById('overloadDiode').style.background = 'radial-gradient(#ff000030, #ff000040)';
+  }
+  document.getElementById('windSpeed').textContent = data.windSpeed;
+  document.getElementById('kWhValue_24H').textContent = data.kWh;
+  document.getElementById('kWhValue_30D').textContent = data.kWh;
+  document.getElementById('kWhValue_OVERALL').textContent = data.kWh;
+  document.getElementById('sweepSpeed').textContent = data.sweepSpeed;
+  rpm=data.value;  
+  document.getElementById('PWMTemperature').textContent = data.PWMTemperature;
+  x= 0.5 + 0.005*data.PWMTemperature;
+  document.getElementById('PWMTemperatureGaugeNotFill').style.transform = `rotate(${x}turn)`;
+  document.getElementById('turbineTemperature').textContent = data.turbineTemperature;
+  x= 0.5 + 0.005*data.turbineTemperature;
+  document.getElementById('turbineTemperatureGaugeNotFill').style.transform = `rotate(${x}turn)`;
 });
 
 // odbior danych "PWMData"//
@@ -90,6 +76,9 @@ socket.on('config', (data) =>{
     document.getElementById("PWM2Max").textContent=data.PWM2Max;
     slider.fillColor();
     slider2.fillColor();
+    document.getElementById('temperatureInput').value = data.maxTemperature;
+    document.getElementById('temperatureOutput').textContent = data.maxTemperature;
+    temperatureFillColor();
 
     if (data.onGrid === true){
       document.getElementById("offGridCheckBox").checked = true;
@@ -97,6 +86,11 @@ socket.on('config', (data) =>{
     else if (data.onGrid === false) {
       document.getElementById("offGridCheckBox").checked = false;
     }
+
+    else if (data.serialNumber !== undefined){
+      document.getElementById('serialNumber').textContent = data.serialNumber;
+    }
+    
 
   offGridOnGridSettingsChange()
 }
