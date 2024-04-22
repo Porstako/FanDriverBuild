@@ -22,7 +22,8 @@ function PWMSubmit()
     sweptDiameter: document.getElementById('sweptDiameter').valueAsNumber, 
     powerCoefficient: document.getElementById('powerCoefficient').valueAsNumber,
     sweepSpeedIndex: document.getElementById('sweepSpeedIndex').valueAsNumber,
-    maxTemperature: document.getElementById('temperatureInput').valueAsNumber
+    maxTemperature: document.getElementById('temperatureInput').valueAsNumber,
+    swapTemperature: document.getElementById('swapTemperatureCheckBox').checked,
     });
 }
 

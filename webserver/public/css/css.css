@@ -68,8 +68,6 @@ input[type="number"]:focus {
     border-radius: 25%;
 }
 
-
-
 /* Classes */
 
 .adnotation{
@@ -216,7 +214,7 @@ input[type="number"]:focus {
 }
 
 .menuDisplayDetails .menuItem{
-    font-size: 15px;
+    font-size: 13px;
     width: 500px
 }
 
@@ -266,7 +264,6 @@ input[type="number"]:focus {
     border-radius: 50%;
     z-index: 1;
 }
-
 
 .ringMain{
     position: relative;
@@ -335,7 +332,6 @@ input[type="number"]:focus {
     display: flex;
 }
 
-
 .value{
     color:#30c79f;
     font-weight: bold;
@@ -343,8 +339,6 @@ input[type="number"]:focus {
     z-index: 2;
     text-align: center;
 }
-
-
 
 /* Classes hover */
 
@@ -411,10 +405,6 @@ input[type="number"]:focus {
     background-position: -25px -25px;
 }
 
-#sweepSpeedImage
-{
-    transition: transform 0.5s;
-}
 #windSpeedBox
 {
     background-image: url("../resources/windIcon.png");
@@ -422,8 +412,6 @@ input[type="number"]:focus {
     background-repeat: no-repeat;
     background-position: center;
 }
-
-
 
 /* Animations */
 @keyframes animateRing

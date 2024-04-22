@@ -47,7 +47,7 @@ socket.on('pythonData', (data) => {
   document.getElementById('kWhValue_30D').textContent = data.kWh;
   document.getElementById('kWhValue_OVERALL').textContent = data.kWh;
   document.getElementById('sweepSpeed').textContent = data.sweepSpeed;
-  rpm=data.value;  
+  rpm=data.sweepSpeed;  
   document.getElementById('PWMTemperature').textContent = data.PWMTemperature;
   x= 0.5 + 0.005*data.PWMTemperature;
   document.getElementById('PWMTemperatureGaugeNotFill').style.transform = `rotate(${x}turn)`;
@@ -82,13 +82,16 @@ socket.on('config', (data) =>{
 
     if (data.onGrid === true){
       document.getElementById("offGridCheckBox").checked = true;
-    }
-    else if (data.onGrid === false) {
+    } else if (data.onGrid === false) {
       document.getElementById("offGridCheckBox").checked = false;
     }
 
-    else if (data.serialNumber !== undefined){
-      document.getElementById('serialNumber').textContent = data.serialNumber;
+    if (data.serialNumber !== undefined){ document.getElementById('serialNumber').textContent = data.serialNumber;  }
+
+    if (data.swapTemperature === true){
+      document.getElementById("swapTemperatureCheckBox").checked = true;
+    } else if (data.swapTemperature === false){
+      document.getElementById("swapTemperatureCheckBox").checked = false;
     }
     
 

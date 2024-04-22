@@ -146,9 +146,9 @@ let slider2 = new DoubleRangeSlider(container2);
 
 function main(){
 
-  slider.minGap = 1;
+  slider.minGap = 60;
   slider.maxGap = 1000;
-  slider2.minGap = 1;
+  slider2.minGap = 60;
   slider2.maxGap = 1000;
 
   let inputs = $$('input[name="PWM1"]');

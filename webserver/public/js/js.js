@@ -21,6 +21,7 @@ function obrot(timestamp){
   document.getElementById('sweepSpeedImage').style.transform = `rotate(${roundDegree}deg)`;
   requestAnimationFrame(obrot);
   lastTime=timestamp;
+  if (roundDegree>360) roundDegree-=360;
 }
 requestAnimationFrame(obrot);
 
@@ -118,7 +119,7 @@ document.getElementById("PWM1MinMinus").addEventListener('mouseleave', () => {cl
 
 //PWM1MinPlus
 document.getElementById("PWM1MinPlus").addEventListener('click', () => {
-  if (slider.values[0]<slider.values[1]){
+  if (slider.values[0]<Number(slider.values[1])-60){
     document.getElementById("PWM1MinInput").value= Number(document.getElementById("PWM1MinInput").value) + 1;
     slider.values[0]+=1;
     document.getElementById("PWM1Min").textContent= Number(document.getElementById("PWM1Min").textContent) + 1;
@@ -127,7 +128,7 @@ document.getElementById("PWM1MinPlus").addEventListener('click', () => {
 });
 document.getElementById("PWM1MinPlus").addEventListener('mousedown', () => {
   PWM1MinPlusPress = setInterval(() => {
-    if (slider.values[0]<slider.values[1]){
+    if (slider.values[0]<Number(slider.values[1])-60){
       document.getElementById("PWM1MinInput").value= Number(document.getElementById("PWM1MinInput").value) + 1;
       slider.values[0]+=1;
       document.getElementById("PWM1Min").textContent= Number(document.getElementById("PWM1Min").textContent) + 1;
@@ -141,7 +142,7 @@ document.getElementById("PWM1MinPlus").addEventListener('mouseleave', () => {  c
 
 //PWM1MaxMinus
 document.getElementById("PWM1MaxMinus").addEventListener('click', () => {
-  if (slider.values[1]>slider.values[0]){
+  if (slider.values[1]>Number(slider.values[0])+60){
     document.getElementById("PWM1MaxInput").value= Number(document.getElementById("PWM1MaxInput").value) - 1;
     slider.values[1]-=1;
     document.getElementById("PWM1Max").textContent = Number(document.getElementById("PWM1Max").textContent) - 1;
@@ -150,7 +151,7 @@ document.getElementById("PWM1MaxMinus").addEventListener('click', () => {
 });
 document.getElementById("PWM1MaxMinus").addEventListener('mousedown', () => {
   PWM1MaxMinusPress = setInterval(() => {
-    if (slider.values[1]>slider.values[0]){
+    if (slider.values[1]>Number(slider.values[0])+60){
       document.getElementById("PWM1MaxInput").value= Number(document.getElementById("PWM1MaxInput").value) - 1;
       slider.values[1]-=1;
       document.getElementById("PWM1Max").textContent = Number(document.getElementById("PWM1Max").textContent) - 1;
@@ -214,7 +215,7 @@ document.getElementById("PWM2MinMinus").addEventListener('mouseleave', () => {
 
 //PWM2MinPlus
 document.getElementById("PWM2MinPlus").addEventListener('click', () => {
-  if (slider2.values[0]<slider2.values[1]){
+  if (slider2.values[0]<Number(slider2.values[1])-60){
     document.getElementById("PWM2MinInput").value= Number(document.getElementById("PWM2MinInput").value) + 1;
     slider2.values[0]+=1;
     document.getElementById("PWM2Min").textContent= Number(document.getElementById("PWM2Min").textContent) + 1;
@@ -223,7 +224,7 @@ document.getElementById("PWM2MinPlus").addEventListener('click', () => {
 });
 document.getElementById("PWM2MinPlus").addEventListener('mousedown', () => {
   PWM2MinPlusPress = setInterval(() => {
-    if (slider2.values[0]<slider2.values[1]){
+    if (slider2.values[0]<Number(slider2.values[1])-60){
       document.getElementById("PWM2MinInput").value= Number(document.getElementById("PWM2MinInput").value) + 1;
       slider2.values[0]+=1;
       document.getElementById("PWM2Min").textContent= Number(document.getElementById("PWM2Min").textContent) + 1;
@@ -241,7 +242,7 @@ document.getElementById("PWM2MinPlus").addEventListener('mouseleave', () => {
 
 //PWM2MaxMinus
 document.getElementById("PWM2MaxMinus").addEventListener('click', () => {
-  if (slider2.values[1]>slider2.values[0]){
+  if (slider2.values[1]>Number(slider2.values[0])+60){
     document.getElementById("PWM2MaxInput").value= Number(document.getElementById("PWM2MaxInput").value) - 1;
     slider2.values[1]-=1;
     document.getElementById("PWM2Max").textContent = Number(document.getElementById("PWM2Max").textContent) - 1;
@@ -250,7 +251,7 @@ document.getElementById("PWM2MaxMinus").addEventListener('click', () => {
 });
 document.getElementById("PWM2MaxMinus").addEventListener('mousedown', () => {
   PWM2MaxMinusPress = setInterval(() => {
-    if (slider2.values[1]>slider2.values[0]){
+    if (slider2.values[1]>Number(slider2.values[0])+60){
       document.getElementById("PWM2MaxInput").value= Number(document.getElementById("PWM2MaxInput").value) - 1;
       slider2.values[1]-=1;
       document.getElementById("PWM2Max").textContent = Number(document.getElementById("PWM2Max").textContent) - 1;

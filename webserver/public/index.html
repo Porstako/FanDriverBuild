@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="css/slider.css">
     <link rel="stylesheet" href="css/switch.css">
     <meta charset="utf-8">
+    <script src="js/d3.js"></script>
   </head>
   <body>
     <div class="container" id="mainDisplay" style="display: block;">
@@ -216,25 +217,34 @@
       <div class="optionButton" id="privacyPolicyButton" style="margin-top: 400px; margin-left: 155px;text-align: center;"><span>&#9413;</span></div>
       
       
-      <div class="box" style="float:left; position:absolute; width:200px; border-radius:0px 30px 30px 0px; margin-top: 140px;">  
+      <div class="box" style="float:left; position:absolute; width:210px; border-radius:0px 30px 30px 0px; margin-top: 115px;">  
         <div class="label" style="text-align: center;margin-bottom: 10px ;">Ustawienia instalacji</div>
-        <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
+        <div style="display:flex; justify-content: space-between;margin-bottom: 8px; align-items: center;">
           <span class="menuItem" id="offGridOnGridLabel">Off-Grid</span>
           <label class="switch">
             <input type="checkbox" id="offGridCheckBox" checked>
             <span class="switchRound"></span>
           </label>
         </div>
-        
-        <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
-          <span class="menuItem">Zmienna obrotów</span><input type="number" class="menuNumericInput" id="sweepSpeedIndex" step="0.001" value="0.631" placeholder="0.123">
+
+        <div style="display:flex; justify-content: space-between;margin-bottom: 8px; align-items: center;">
+          <span class="menuItem" id="swapTemperatureLabel">Zamień temp.
+          </span>
+          <label class="switch">
+            <input type="checkbox" id="swapTemperatureCheckBox">
+            <span class="switchRound"></span>
           </label>
         </div>
-        <div style="display:flex; justify-content: space-between;margin-bottom: 8px;">
+        
+        <div style="display:flex; justify-content: space-between;margin-bottom: 8px; align-items: center;">
+          <span class="menuItem">Zmienna obr.</span><input type="number" class="menuNumericInput" id="sweepSpeedIndex" step="0.001" value="0.631" placeholder="0.123">
+          </label>
+        </div>
+        <div style="display:flex; justify-content: space-between;margin-bottom: 8px; align-items: center;">
           <span class="menuItem">Średnica</span><input type="number" class="menuNumericInput" id="sweptDiameter" step="0.1" value="630" placeholder="1234">
           </label>
         </div>
-        <div style="display:flex; justify-content: space-between;">
+        <div style="display:flex; justify-content: space-between; align-items: center;">
           <span class="menuItem">Efektywność</span>
           <input type="number" class="menuNumericInput" id="powerCoefficient" step="0.01" value="0.40" placeholder="0.40">
           </label>
