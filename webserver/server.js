@@ -2,15 +2,17 @@
 
 // Plik uruchamiający serwer node.js
 // serwer domyślnie działa na poniższych ustawieniach:
-// ip localhost raspberry
+// ip localhost lub SterownikAS
 // port 8080
 
 // kod posiada obsługę plików html, css, js, tff oraz svg
 // 
 
-var http = require('http').createServer(handler);
-var fs = require('fs');
-var path = require('path');
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
+const path = require('path');
+const { exec } = require('child_process');
 const io = require('socket.io')(http, {
   cors: {
     origin: "*",
@@ -32,72 +34,57 @@ let config = {
 
 http.listen(8080); //port serwera
 
-function handler (req, res) { //utwórz serwer
+app.use((req, res, next) => {
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-  let filePath = path.join(__dirname, 'public', req.url);
-  if (req.url === '/') {
-    filePath = path.join(__dirname, 'public', 'index.html');
+  next();
+});
+
+app.use((req, res, next) => {
+  if (req.path.endsWith('.html')) { // Dla plików HTML
+      res.setHeader('Content-Type', 'text/html');
   }
-  const extname = String(path.extname(filePath)).toLowerCase();
-  let contentType = 'text/html';
-  switch (extname) {
-    case '.js':
-      contentType = 'text/javascript';
-      break;
-    case '.css':
-      contentType = 'text/css';
-      break;
-    case '.ttf':
-      contentType = 'font/ttf';
-      break;
-    case '.svg':
-      contentType = 'image/svg+xml';
-      break;
+  next();
+});
 
-/*
-Przykład dodania kolejnego rozszerzenia pliku, wystarczy skopiować poniższy kod i podmienić co trzeba
-    case '.rozszerzeniePliku':
-      contentType = 'typ MIME'
-      break;
+app.use(express.static(path.join(__dirname, 'public')));
 
-
-      Szczegółowy opis: https://pl.wikipedia.org/wiki/Typ_MIME
-*/
-  }
-
-  fs.readFile(filePath, function(err, data) {
-    if (err) {
-      res.writeHead(404, {'Content-Type': 'text/html'});
-      return res.end("404 Not Found");
+/*app.get('/update', (req, res) => {
+  exec('sh update_script.sh', (error, stdout, stderr) => {
+    if (error) {
+      console.error(`exec error: ${error}`);
+      res.status(500).send('Update Failed');
+    } else {
+      console.log(`stdout: ${stdout}`);
+      console.error(`stderr: ${stderr}`);
+      res.status(200).send('Update Successful');
     }
-    res.writeHead(200, {'Content-Type': contentType}); //odczyt pliku
-    res.write(data); //Wyświetlenie danych z pliku
-    return res.end();
   });
+});*/
 
-  
-}
+app.get('/stats', (req, res) => {
+  res.sendFile(path.join('/home/pi/FanDriver/rpi', 'stats.json'));
+});
 
-// Połączenie WebSocket
-io.sockets.on('connection', function (socket) {
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+io.on('connection', (socket) => {
   io.emit('config', config);
 
-
-  //Dane wyslane z clienta pythona
   socket.on('pythonData', (data) => {
     io.emit('pythonData', data);
   });
 
-  //Dane config
-  socket.on('config', (data) =>{
+  socket.on('config', (data) => {
     io.emit('config', data);
-    config=data;
+    config = data;
   });
 
-  //Dane wyslane z clienta przeglądarki
-  socket.on('clientData', (data) =>{
+  socket.on('clientData', (data) => {
     io.emit('clientData', data);
   });
 });
+

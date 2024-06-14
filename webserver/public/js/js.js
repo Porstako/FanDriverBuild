@@ -6,13 +6,40 @@
 let lastTime=0;
 
 // Oczekiwanie na kliknięcie
-document.getElementById("menuButton").addEventListener('click', () => menuToggle());
-document.getElementById("menuButton2").addEventListener('click', () => menuToggle());
+document.getElementById("menuButton").addEventListener('click', () => menuToggle(1));
+document.getElementById("menuButton2").addEventListener('click', () => menuToggle(2));
+document.getElementById("menuButton3").addEventListener('click', () => menuToggle(2));
+document.getElementById("kWhStats").addEventListener('click', () => menuToggle(3));
+
+// funkcja do przejścia| Statystyki <--> Strona główna <--> Menu
+function menuToggle(buttonID){
+  if (buttonID === 1)
+  {
+    document.getElementById("mainDisplay").style.display = 'none';
+    document.getElementById("menuDisplay").style.display = 'block';
+    document.getElementById("statsContainer").style.display = 'none';
+  } else if (buttonID === 2){
+    document.getElementById("menuDisplay").style.display = 'none';
+    document.getElementById("mainDisplay").style.display = 'block';
+    document.getElementById("statsContainer").style.display = 'none';
+  } else if (buttonID === 3){
+    document.getElementById("menuDisplay").style.display = 'none';
+    document.getElementById("mainDisplay").style.display = 'none';
+    document.getElementById("statsContainer").style.display = 'block';
+    updateChart();
+  }
+}
 
 // Zapobieganie wywołaniu menu kontekstowego prawym przyciskiem myszy
-document.addEventListener('contextmenu', function(event) { 
-  event.preventDefault();
-});
+document.addEventListener('contextmenu', function(event) {   event.preventDefault(); });
+
+//Update
+/*function requestUpdate() {
+  fetch('/update', { method: 'GET' })
+      .then(response => response.text())
+      .then(data => alert(data))
+      .catch(error => console.error('Error:', error));
+}*/
 
 //obrot animacja
 function obrot(timestamp){
@@ -232,13 +259,8 @@ document.getElementById("PWM2MinPlus").addEventListener('mousedown', () => {
     }
   }, 200);
 });
-document.getElementById("PWM2MinPlus").addEventListener('mouseup', () => {
-  clearInterval(PWM2MinPlusPress);
-});
-document.getElementById("PWM2MinPlus").addEventListener('mouseleave', () => {
-  clearInterval(PWM2MinPlusPress);
-});
-
+document.getElementById("PWM2MinPlus").addEventListener('mouseup', () => {  clearInterval(PWM2MinPlusPress);  });
+document.getElementById("PWM2MinPlus").addEventListener('mouseleave', () => {  clearInterval(PWM2MinPlusPress);  });
 
 //PWM2MaxMinus
 document.getElementById("PWM2MaxMinus").addEventListener('click', () => {
@@ -259,12 +281,8 @@ document.getElementById("PWM2MaxMinus").addEventListener('mousedown', () => {
     }
   }, 200);
 });
-document.getElementById("PWM2MaxMinus").addEventListener('mouseup', () => {
-  clearInterval(PWM2MaxMinusPress);
-});
-document.getElementById("PWM2MaxMinus").addEventListener('mouseleave', () => {
-  clearInterval(PWM2MaxMinusPress);
-});
+document.getElementById("PWM2MaxMinus").addEventListener('mouseup', () => {  clearInterval(PWM2MaxMinusPress); });
+document.getElementById("PWM2MaxMinus").addEventListener('mouseleave', () => {  clearInterval(PWM2MaxMinusPress); });
 
 //PWM2MaxPlus
 document.getElementById("PWM2MaxPlus").addEventListener('click', () => {
@@ -285,30 +303,11 @@ document.getElementById("PWM2MaxPlus").addEventListener('mousedown', () => {
     }
   }, 200);
 });
-document.getElementById("PWM2MaxPlus").addEventListener('mouseup', () => {
-  clearInterval(PWM2MaxPlusPress);
-});
-document.getElementById("PWM2MaxPlus").addEventListener('mouseleave', () => {
-  clearInterval(PWM2MaxPlusPress);
-});
-
-// funkcja do przejścia Strona główna <--> Menu
-function menuToggle(){
-  if (document.getElementById("mainDisplay").style.display === 'block')
-  {
-    document.getElementById("mainDisplay").style.display = 'none';
-    document.getElementById("menuDisplay").style.display = 'block';
-  } else{
-    document.getElementById("menuDisplay").style.display = 'none';
-    document.getElementById("mainDisplay").style.display = 'block';
-  }
-  
-}
+document.getElementById("PWM2MaxPlus").addEventListener('mouseup', () => {  clearInterval(PWM2MaxPlusPress);  });
+document.getElementById("PWM2MaxPlus").addEventListener('mouseleave', () => {  clearInterval(PWM2MaxPlusPress);  });
 
 //Proste funkcje przycisków polityki prywatnosci i pomocy
-document.getElementById("PWMCancel").addEventListener('click', () => {
-  location.reload();
-}); 
+document.getElementById("PWMCancel").addEventListener('click', () => {  location.reload();  }); 
 
 document.getElementById("PWMSubmit").addEventListener('click', () => {
   PWMSubmit();
@@ -339,6 +338,16 @@ document.getElementById("helpButton").addEventListener('click', () => {
 document.getElementById("closeHelpButton").addEventListener('click', () => {
   document.getElementById("helpContainer").style.display = 'none';
 });
+
+document.getElementById("updateSystemButton").addEventListener('click', () => {
+  document.getElementById("updateConfirmationContainer").style.display = 'flex';
+});
+
+document.getElementById("closeUpdateConfirmationButton").addEventListener('click', () => {
+  document.getElementById("updateConfirmationContainer").style.display = 'none';
+});
+
+//document.getElementById("updateConfirmationButton").addEventListener('click', requestUpdate());
 
 //ograniczenie wartości liczbowych
 document.getElementById('sweptDiameter').addEventListener('input', function () {

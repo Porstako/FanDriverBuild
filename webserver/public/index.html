@@ -8,8 +8,30 @@
     <script src="js/d3.js"></script>
   </head>
   <body>
-    <div class="container" id="mainDisplay" style="display: block;">
+    <div class="container" id="statsContainer" style="margin: auto; display:none;">
+      <div id="menuButton3" class="menuButton" style="float: left; border-radius: 0% 0% 100% 0%;"><div class="menuButtonIcon"><span style="margin-left: 14px;">&#11148;</span></div></div>
+      <div style="display: block; margin-top: -30px;"><div id="graphContainer" class="box" style="background-color: #101F1F; max-width: 800px; margin:auto;"></div>
+      <div id="sideStatsContainer" style="display: flex; justify-content: space-between; max-width: 800px; margin: auto; margin-top: 10px;">
+        <div class="statsSelectBlock box">
+          <label for="precision" style="color:beige">Precyzja</label>
+          <select id="precision"></select><br>
+        </div>
+        <div class="statsSelectBlock box">
+          <label for="dateRange" style="color:beige">Zakres</label>
+          <select id="dateRange"></select><br>
+        </div>
+        <div class="statsSelectBlock box">
+          <label for="dataType" style="color:beige">Dane</label>
+          <select id="dataType"></select><br>
+        </div>
+      </div>
+    </div>
+    </div>
 
+
+
+
+    <div class="container" id="mainDisplay" style="display: block;">
       <div id="menuButton" class="menuButton" style="float: right; border-radius: 0% 0% 0% 100%; margin-right: 0px;"><div class="menuButtonIcon"><span style="margin-left: 23px;">&#9776;</span></div></div>    
       
       <div class="box" id="mainValuesDisplay" >
@@ -133,11 +155,20 @@
           <div id="helpQR"><img src="resources/helpQRCode.svg" width="130px" height="130px"></div>
         </div>
       </div>
+      <div class="menuDisplayContainer" id="updateConfirmationContainer"> 
+        <div class="menuDisplayDetails">
+          <div class="closeMenuDisplayDetails" id="closeUpdateConfirmationButton">&#10006;</div>
+          <div class="label" style="text-align: center;margin-bottom: 10px; font-size: 42px; margin-top: 30px;">Aktualizacja</div>
+          <p style="text-align: center;">Aktualizacja oprogramowania potrwa około 10 minut. Upewnij się, że sterownik podłączony jest do internetu<br>
+          Czy na pewno chcesz zaktualizować?</p>
+          <div style="display:flex; justify-content: center;"><div class="settingsButton" id="updateConfirmationButton" style="text-align: center; margin-top: 60px;"><span>Tak</span></div></div>
+        </div>
+      </div>
       <div class="menuDisplayContainer" id="saveInfoContainer"> 
         <div class="menuDisplayDetails">
-          <div class="label" style="text-align: center;margin-bottom: 10px; font-size: 42px; margin-top: 30px;">Zapisano ustawienia</div>
+          <div class="label" style="text-align: center;margin-bottom: 10px; font-size: 38px; margin-top: 30px;">Zapisano ustawienia</div>
           <p style="text-align: center;">Ustawienia zostały zapisane pomyślnie<br>
-          Okno zamknie się automatycznie w przeciągu 5 sekund</span>
+          Okno zamknie się automatycznie w przeciągu 5 sekund</p>
           <div style="display:flex; justify-content: center;"><div class="settingsButton" id="closeSaveInfoButton" style="text-align: center; margin-top: 60px;"><span>OK</span></div></div>
         </div>
       </div>
@@ -267,6 +298,7 @@
     <script src="js/slider.js"></script>
     <script src="js/dataReciveHandler.js"></script>
     <script src="js/dataEmit.js"></script>
+    <script src="js/charts.js"></script>
     <script src="js/js.js"></script>
   </body>
 </html>
