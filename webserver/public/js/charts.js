@@ -446,8 +446,8 @@ function updateInteractionRects() {
         .on("mouseover", (event, d) => {
             tooltip.style("opacity", 1);
             tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.kWh).toFixed(2)} kWh`)
-                .style("left", `${event.pageX + 10}px`)
-                .style("top", `${event.pageY - 10}px`);
+                .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                .style("top", `${event.clientY - 10}px`);
         })
         .on("mouseout", () => {
             tooltip.style("opacity", 0);
@@ -479,8 +479,8 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Watt)} W`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
+                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("top", `${event.clientY - 10}px`);
                         updateDots();
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
@@ -496,8 +496,8 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Volt)} V`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
+                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
                             .transition()
@@ -514,8 +514,8 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Amper).toFixed(1)} A`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
+                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
                             .transition()
@@ -532,8 +532,8 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Wind).toFixed(1)} m/s`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
+                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
                             .transition()
@@ -550,8 +550,8 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.SweepSpeed)} rpm`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
+                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
                             .transition()
@@ -568,8 +568,8 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.PWMTemperature)} &#176;C`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
+                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
                             .transition()
@@ -586,8 +586,8 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.TurbineTemperature)} &#176;C`)
-                            .style("left", `${event.pageX + 10}px`)
-                            .style("top", `${event.pageY - 10}px`);
+                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
                             .transition()

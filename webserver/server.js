@@ -64,7 +64,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 });*/
 
 app.get('/stats', (req, res) => {
-  res.sendFile(path.join('/home/pi/FanDriver/rpi', 'stats.json'));
+  res.sendFile(path.join('/home/test/FanDriver/home/pi/FanDriver/rpi', 'stats.json'));
 });
 
 app.get('*', (req, res) => {
