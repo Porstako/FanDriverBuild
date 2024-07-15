@@ -5,13 +5,13 @@ cd
 # Zabijanie procesów
 pkill -f server.js
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się zabić procesu server.js" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się zabić procesu server.js (kod:1)" >> /home/pi/FanDriver/update.log
   exit 1
 fi
 
 pkill -f mainPI.bin
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się zabić procesu mainPI.bin" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się zabić procesu mainPI.bin (kod:1)" >> /home/pi/FanDriver/update.log
   exit 1
 fi
 
@@ -22,46 +22,52 @@ git fetch origin
 # Sprawdzanie, czy lokalny stan jest zaktualizowany
 UPDATES_AVAILABLE=$(git status | grep 'behind')
 if [[ "$UPDATES_AVAILABLE" ]]; then
-    echo "Dostępne aktualizacje. Pobieranie..."
+    echo "git: Dostępne aktualizacje. Pobieranie..." >> /home/pi/FanDriver/update.log
     git pull origin
     if [ $? -ne 0 ]; then
-        echo "Błąd: Nie udało się pobrać aktualizacji z git" >> /home/pi/FanDriver/update.log
+        echo "Błąd: git: Nie udało się pobrać aktualizacji (kod: 2)" >> /home/pi/FanDriver/update.log
         exit 2
     else
-        echo "Aktualizacja zakończona sukcesem."
+        echo "git: Pobrano aktualizację." >> /home/pi/FanDriver/update.log
     fi
 else
-    echo "Brak dostępnych aktualizacji."
+    echo "git: Brak dostępnych aktualizacji." >> /home/pi/FanDriver/update.log
 fi
 
 # Ustawienie uprawnień
 chmod +x /home/pi/FanDriver/rpi/mainPI.bin
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się ustawić uprawnień dla mainPI.bin" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się ustawić uprawnień dla mainPI.bin (kod:3)" >> /home/pi/FanDriver/update.log
   exit 3
+else
+  echo "Ustawiono uprawnienia dla mainPI.bin" >> /home/pi/FanDriver/update.log
 fi
 
-chmod +x /home/pi/FanDriver/update-script.sh
+chmod +x /home/pi/FanDriver/update_script.sh
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się ustawić uprawnień dla update-script.sh" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się ustawić uprawnień dla update_script.sh (kod:3)" >> /home/pi/FanDriver/update.log
   exit 3
+else
+  echo "Ustawiono uprawnienia dla update_script.sh" >> /home/pi/FanDriver/update.log
 fi
 
 chmod +x /home/pi/FanDriver/connect_wifi.sh
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się ustawić uprawnień dla connect_wifi.sh" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się ustawić uprawnień dla connect_wifi.sh (kod:3)" >> /home/pi/FanDriver/update.log
   exit 3
+else
+  echo "Ustawiono uprawnienia dla connect_wifi.sh" >> /home/pi/FanDriver/update.log
 fi
 
 # Uruchomienie serwera i programu
 node /home/pi/FanDriver/webserver/server.js &
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się uruchomić server.js" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się uruchomić server.js (kod:4)" >> /home/pi/FanDriver/update.log
   exit 4
 fi
 
 /home/pi/FanDriver/rpi/mainPI.bin &
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się uruchomić mainPI.bin" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się uruchomić mainPI.bin (kod:4)" >> /home/pi/FanDriver/update.log
   exit 4
 fi
