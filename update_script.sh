@@ -23,6 +23,7 @@ git fetch origin
 UPDATES_AVAILABLE=$(git status | grep 'behind')
 if [[ "$UPDATES_AVAILABLE" ]]; then
     echo "git: Dostępne aktualizacje. Pobieranie..." >> /home/pi/FanDriver/update.log
+    git stash
     git pull origin
     if [ $? -ne 0 ]; then
         echo "Błąd: git: Nie udało się pobrać aktualizacji (kod: 2)" >> /home/pi/FanDriver/update.log
