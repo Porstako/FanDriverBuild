@@ -34,12 +34,12 @@ function menuToggle(buttonID){
 document.addEventListener('contextmenu', function(event) {   event.preventDefault(); });
 
 //Update
-/*function requestUpdate() {
+function requestUpdate() {
   fetch('/update', { method: 'GET' })
       .then(response => response.text())
       .then(data => alert(data))
       .catch(error => console.error('Error:', error));
-}*/
+}
 
 //obrot animacja
 function obrot(timestamp){
@@ -347,7 +347,15 @@ document.getElementById("closeUpdateConfirmationButton").addEventListener('click
   document.getElementById("updateConfirmationContainer").style.display = 'none';
 });
 
-//document.getElementById("updateConfirmationButton").addEventListener('click', requestUpdate());
+document.getElementById("updateConfirmationButton").addEventListener('click', requestUpdate);
+
+document.getElementById("internetConnectionButton").addEventListener('click', () => {
+  document.getElementById("internetConnectionContainer").style.display = 'flex';
+});
+
+document.getElementById("closeInternetConnectionButton").addEventListener('click', () => {
+  document.getElementById("internetConnectionContainer").style.display = 'none';
+});
 
 //ograniczenie wartości liczbowych
 document.getElementById('sweptDiameter').addEventListener('input', function () {

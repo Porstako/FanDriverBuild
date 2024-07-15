@@ -29,6 +29,18 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
+chmod +x /home/pi/FanDriver/update-script.sh
+if [ $? -ne 0 ]; then
+  echo "Błąd: Nie udało się ustawić uprawnień dla mainPI.bin" >> /home/pi/FanDriver/update.log
+  exit 1
+fi
+
+chmod +x /home/pi/FanDriver/connect_wifi.sh
+if [ $? -ne 0 ]; then
+  echo "Błąd: Nie udało się ustawić uprawnień dla mainPI.bin" >> /home/pi/FanDriver/update.log
+  exit 1
+fi
+
 # Uruchomienie serwera i programu
 node /home/pi/FanDriver/webserver/server.js &
 if [ $? -ne 0 ]; then

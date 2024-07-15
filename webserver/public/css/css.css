@@ -75,6 +75,11 @@ input[type="number"]:focus {
     font-style: italic;
 }
 
+.formInContainer{
+    margin-top: 30px;
+    
+}
+
 .statsSelectBlock{
     display: block;
     max-width: 200px;

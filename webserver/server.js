@@ -48,10 +48,11 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-/*app.get('/update', (req, res) => {
-  exec('sh update_script.sh', (error, stdout, stderr) => {
+app.get('/update', (req, res) => {
+  exec('sh /home/pi/FanDriver/update_script.sh', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       res.status(500).send('Update Failed');
@@ -61,10 +62,23 @@ app.use(express.static(path.join(__dirname, 'public')));
       res.status(200).send('Update Successful');
     }
   });
-});*/
+});
 
 app.get('/stats', (req, res) => {
   res.sendFile(path.join('/home/pi/FanDriver/rpi', 'stats.json'));
+});
+
+app.post('/connect', (req, res) => {
+  const { ssid, password } = req.body;
+  const script = `/home/rpi/FanDriver/connect_wifi.sh "${ssid}" "${password}"`;
+  
+  exec(script, (error, stdout, stderr) => {
+      if (error) {
+          console.error(`exec error: ${error}`);
+          return res.status(500).send("Błąd podczas łączenia z siecią Wi-Fi.");
+      }
+      res.send("Pomyślnie połączono z siecią Wi-Fi.");
+  });
 });
 
 app.get('*', (req, res) => {

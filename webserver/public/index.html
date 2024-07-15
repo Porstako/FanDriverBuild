@@ -172,6 +172,21 @@
           <div style="display:flex; justify-content: center;"><div class="settingsButton" id="closeSaveInfoButton" style="text-align: center; margin-top: 60px;"><span>OK</span></div></div>
         </div>
       </div>
+      <div class="menuDisplayContainer" id="internetConnectionContainer"> 
+        <div class="menuDisplayDetails">
+          <div class="closeMenuDisplayDetails" id="closeInternetConnectionButton">&#10006;</div>
+          <form action="/connect" method="post" class="formInContainer">
+            <label for="ssid">SSID:</label>
+            <input type="text" id="ssid" name="ssid" required>
+            <br>
+            <label for="password">Hasło:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <button type="submit">Połącz</button>
+        </form>
+        </div>
+      </div>
+
       <div id="menuButton2" class="menuButton" style="float: left; border-radius: 0% 0% 100% 0%;"><div class="menuButtonIcon"><span style="margin-left: 14px;">&#11148;</span></div></div>
       
       <div style="display:block; justify-content: space-around;">
@@ -243,9 +258,10 @@
       <div class="settingsButton" id="PWMSubmit" style="margin-top: 400px; margin-left: 800px;text-align: center;"><span>Zapisz</span></div>
       <div class="settingsButton" id="PWMCancel" style="margin-top: 400px; margin-left: 600px;text-align: center;"><span>Anuluj</span></div>
 
-      <div class="optionButton" id="helpButton" style="margin-top: 400px; margin-left: 45px;text-align: center;"><span>?</span></div>
-      <div class="optionButton" id="updateSystemButton" style="margin-top: 400px; margin-left: 100px;text-align: center;"><span>&#8634;</span></div>
-      <div class="optionButton" id="privacyPolicyButton" style="margin-top: 400px; margin-left: 155px;text-align: center;"><span>&#9413;</span></div>
+      <div class="optionButton" id="helpButton" style="margin-top: 400px; margin-left: 35px;text-align: center;"><span>?</span></div>
+      <div class="optionButton" id="updateSystemButton" style="margin-top: 400px; margin-left: 90px;text-align: center;"><span>&#8634;</span></div>
+      <div class="optionButton" id="privacyPolicyButton" style="margin-top: 400px; margin-left: 145px;text-align: center;"><span>&#9413;</span></div>
+      <div class="optionButton" id="internetConnectionButton" style="margin-top: 400px; margin-left: 200px;text-align: center;"><span>N</span></div>
       
       
       <div class="box" style="float:left; position:absolute; width:210px; border-radius:0px 30px 30px 0px; margin-top: 115px;">  
