@@ -364,3 +364,25 @@ document.getElementById('sweptDiameter').addEventListener('input', function () {
     this.value = this.value.slice(0, maxLength);
   }
 });
+
+// Ustawienie limitu czasu na 30 minut (1800000 milisekund)
+var czasNieaktywnosci = 1800000;
+
+// Funkcja do resetowania timera
+var timer;
+
+function resetTimer() {
+    clearTimeout(timer);
+    timer = setTimeout(function() {
+        window.location.reload();  // Przeładowanie strony
+    }, czasNieaktywnosci);
+}
+
+// Wywołanie funkcji resetTimer przy różnych rodzajach aktywności
+window.onload = resetTimer;
+window.onmousemove = resetTimer;
+window.onmousedown = resetTimer;  // Obsługuje kliknięcia myszą
+window.ontouchstart = resetTimer; // Obsługuje dotknięcia ekranu
+window.onclick = resetTimer;      // Obsługuje kliknięcia
+window.onkeypress = resetTimer;   // Obsługuje naciśnięcia klawiszy
+window.addEventListener('scroll', resetTimer, true); // Obsługuje przewijanie

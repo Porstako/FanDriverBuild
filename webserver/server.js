@@ -70,7 +70,7 @@ app.get('/stats', (req, res) => {
 
 app.post('/connect', (req, res) => {
   const { ssid, password } = req.body;
-  const script = `/home/rpi/FanDriver/connect_wifi.sh "${ssid}" "${password}"`;
+  const script = `/home/pi/FanDriver/connect_wifi.sh "${ssid}" "${password}"`;
   
   exec(script, (error, stdout, stderr) => {
       if (error) {
