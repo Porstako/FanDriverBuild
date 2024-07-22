@@ -20,7 +20,6 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# Aktualizacja kodu
 cd /home/pi/FanDriver
 
 # Sprawdzanie, czy lokalny stan jest zaktualizowany
@@ -63,15 +62,5 @@ else
   echo "Ustawiono uprawnienia dla connect_wifi.sh" >> /home/pi/FanDriver/update.log
 fi
 
-# Uruchomienie serwera i programu
-node /home/pi/FanDriver/webserver/server.js &
-if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się uruchomić server.js (kod:4)" >> /home/pi/FanDriver/update.log
-  exit 4
-fi
-
-/home/pi/FanDriver/rpi/mainPI.bin &
-if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się uruchomić mainPI.bin (kod:4)" >> /home/pi/FanDriver/update.log
-  exit 4
-fi
+# Uruchomienie ponownie
+reboot
