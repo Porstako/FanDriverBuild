@@ -1,6 +1,10 @@
 #!/bin/bash
 
 cd
+cd /home/pi/FanDriver
+UPDATES_AVAILABLE=$(git status | grep 'behind')
+
+cd
 
 # Zabijanie procesów
 pkill -f server.js
@@ -20,7 +24,6 @@ cd /home/pi/FanDriver
 git fetch origin
 
 # Sprawdzanie, czy lokalny stan jest zaktualizowany
-UPDATES_AVAILABLE=$(git status | grep 'behind')
 if [[ "$UPDATES_AVAILABLE" ]]; then
     echo "git: Dostępne aktualizacje. Pobieranie..." >> /home/pi/FanDriver/update.log
     git stash
