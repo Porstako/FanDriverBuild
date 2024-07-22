@@ -365,6 +365,10 @@ document.getElementById('sweptDiameter').addEventListener('input', function () {
   }
 });
 
+document.getElementById("internetConnectionSubmitButton").addEventListener("click", function() {
+  document.getElementById("internetConnectionForm").submit();
+});
+
 // Ustawienie limitu czasu na 30 minut (1800000 milisekund)
 var czasNieaktywnosci = 1800000;
 

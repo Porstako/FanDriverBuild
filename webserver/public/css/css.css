@@ -34,6 +34,11 @@ body{
     user-select: none;         
 }
 
+label{
+    font-size: 36px;
+    font-weight: bold;
+}
+
 /* Wywalenie przycisków Góra dół z inputów numerycznych */
 
 input[type="number"]::-webkit-inner-spin-button, 
@@ -49,23 +54,37 @@ input[type="number"]::-ms-reveal {
 
 /* input numeryczny */
 
-input[type="number"] {
+input[type="number"]{
+    width: 52px;
+    height: 28px;
+    font-size: 24px;
+}
+
+input[type="text"],
+input[type="password"]{
+    width: 350px;
+    height:44px;
+    font-size: 32px;
+}
+
+input[type="number"],
+input[type="text"],
+input[type="password"] {
     -moz-appearance: textfield;
     border-color:#30c79f;
     background-color: #1A2F2F;
     color:beige;
-    width: 52px;
-    height: 28px;
-    border-radius: 15%;
+    border-radius: 8px / 4px;
     transition: 0.1s;
-    font-size: 24px;
-
+    
 }
 
-input[type="number"]:focus {
+input[type="number"]:focus,
+input[type="text"]:focus,
+input[type="password"]:focus {
     background-color: #203F3F;
     outline: none;
-    border-radius: 25%;
+    border-radius: 13px / 7px;
 }
 
 /* Classes */
@@ -77,7 +96,7 @@ input[type="number"]:focus {
 
 .formInContainer{
     margin-top: 30px;
-    
+    padding: 0px 30px;
 }
 
 .statsSelectBlock{
@@ -181,6 +200,13 @@ input[type="number"]:focus {
     transform-origin: center top;
     transform:rotate(-0.5turn);
     transition: 0.3s ease-in-out;
+}
+
+.inputInternetConnectionRow{
+    display: flex; 
+    width: 100%; 
+    justify-content: space-between; 
+    align-items: center;
 }
 
 .label{
@@ -381,7 +407,7 @@ input[type="number"]:focus {
     color:beige;
 }
 
-#PWMSubmit, #closeSaveInfoButton, #updateConfirmationButton{
+#PWMSubmit, #closeSaveInfoButton, #updateConfirmationButton, #internetConnectionSubmitButton{
     background: linear-gradient(140deg, #24A535 20%, #54FF65 80%);
 }
 
