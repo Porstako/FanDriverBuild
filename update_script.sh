@@ -2,7 +2,7 @@
 
 LOG_FILE="/home/pi/FanDriver/update.log"
 
-# Tworzenie kopii głównego skryptu jako tymczasowy skrypt
+# Tworzenie kopii głównego skryptu jako tymczasowy skrypt.
 TEMP_SCRIPT=$(mktemp /tmp/temp_update_script.XXXXXX)
 
 cat << 'EOF' > "$TEMP_SCRIPT"
