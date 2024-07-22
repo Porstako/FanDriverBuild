@@ -75,9 +75,7 @@ app.post('/connect', (req, res) => {
   exec(script, (error, stdout, stderr) => {
       if (error) {
           console.error(`exec error: ${error}`);
-          return res.status(500).send("Błąd podczas łączenia z siecią Wi-Fi.");
       }
-      res.send("Pomyślnie połączono z siecią Wi-Fi.");
   });
 });
 

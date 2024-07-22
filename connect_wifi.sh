@@ -12,8 +12,10 @@ fi
 # Rozłączanie wszystkich aktywnych połączeń Wi-Fi
 nmcli device disconnect wlan0
 
-# Usuwanie istniejącej konfiguracji sieci (jeśli istnieje)
-nmcli con delete "$SSID" 2>/dev/null
+if nmcli connection show | grep -q "$SSID"; then
+    # Usuwanie istniejącej konfiguracji sieci (jeśli istnieje)
+    nmcli con delete "$SSID" 2>/dev/null
+fi
 
 # Tworzenie nowego połączenia Wi-Fi i łączenie się z nim
 nmcli device wifi connect "$SSID" password "$PASSWORD" ifname wlan0
