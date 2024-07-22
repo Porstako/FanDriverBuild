@@ -1,66 +1,86 @@
 #!/bin/bash
 
+LOG_FILE="/home/pi/FanDriver/update.log"
+
+# Tworzenie kopii głównego skryptu jako tymczasowy skrypt
+TEMP_SCRIPT=$(mktemp /tmp/temp_update_script.XXXXXX)
+
+cat << 'EOF' > "$TEMP_SCRIPT"
+#!/bin/bash
+
+LOG_FILE="/home/pi/FanDriver/update.log"
+
+# Przejście do katalogu domowego
 cd
-cd /home/pi/FanDriver
+
+# Przejście do katalogu projektu i sprawdzenie, czy operacja się powiodła
+cd /home/pi/FanDriver || { echo "Błąd: Nie udało się przejść do katalogu /home/pi/FanDriver" >> "$LOG_FILE"; exit 1; }
+
+# Pobieranie aktualizacji zdalnego repozytorium
 git fetch origin
 UPDATES_AVAILABLE=$(git status | grep 'behind')
 
-cd
-
-# Zabijanie procesów
-pkill -f server.js
-if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się zabić procesu server.js (kod:1)" >> /home/pi/FanDriver/update.log
-  exit 1
-fi
-
-pkill -f mainPI.bin
-if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się zabić procesu mainPI.bin (kod:1)" >> /home/pi/FanDriver/update.log
-  exit 1
-fi
-
-cd /home/pi/FanDriver
-
-# Sprawdzanie, czy lokalny stan jest zaktualizowany
 if [[ "$UPDATES_AVAILABLE" ]]; then
-    echo "git: Dostępne aktualizacje. Pobieranie..." >> /home/pi/FanDriver/update.log
-    git stash
-    git pull origin
-    if [ $? -ne 0 ]; then
-        echo "Błąd: git: Nie udało się pobrać aktualizacji (kod: 2)" >> /home/pi/FanDriver/update.log
-        exit 2
-    else
-        echo "git: Pobrano aktualizację." >> /home/pi/FanDriver/update.log
-    fi
+  # Zabijanie procesów
+  pkill -f server.js
+  if [ $? -ne 0 ]; then
+    echo "Błąd: Nie udało się zabić procesu server.js (kod: 1)" >> "$LOG_FILE"
+    exit 1
+  fi
+
+  pkill -f mainPI.bin
+  if [ $? -ne 0 ]; then
+    echo "Błąd: Nie udało się zabić procesu mainPI.bin (kod: 1)" >> "$LOG_FILE"
+    exit 1
+  fi
+
+  cd /home/pi/FanDriver
+
+  echo "git: Dostępne aktualizacje. Pobieranie..." >> "$LOG_FILE"
+  git stash
+  git pull origin
+  if [ $? -ne 0 ]; then
+      echo "Błąd: git: Nie udało się pobrać aktualizacji (kod: 2)" >> "$LOG_FILE"
+      exit 2
+  else
+      echo "git: Pobrano aktualizację." >> "$LOG_FILE"
+  fi
 else
-    echo "git: Brak dostępnych aktualizacji." >> /home/pi/FanDriver/update.log
+  echo "git: Brak dostępnych aktualizacji." >> "$LOG_FILE"
 fi
 
 # Ustawienie uprawnień
 chmod +x /home/pi/FanDriver/rpi/mainPI.bin
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się ustawić uprawnień dla mainPI.bin (kod:3)" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się ustawić uprawnień dla mainPI.bin (kod: 3)" >> "$LOG_FILE"
   exit 3
 else
-  echo "Ustawiono uprawnienia dla mainPI.bin" >> /home/pi/FanDriver/update.log
+  echo "Ustawiono uprawnienia dla mainPI.bin" >> "$LOG_FILE"
 fi
 
 chmod +x /home/pi/FanDriver/update_script.sh
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się ustawić uprawnień dla update_script.sh (kod:3)" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się ustawić uprawnień dla update_script.sh (kod: 3)" >> "$LOG_FILE"
   exit 3
 else
-  echo "Ustawiono uprawnienia dla update_script.sh" >> /home/pi/FanDriver/update.log
+  echo "Ustawiono uprawnienia dla update_script.sh" >> "$LOG_FILE"
 fi
 
 chmod +x /home/pi/FanDriver/connect_wifi.sh
 if [ $? -ne 0 ]; then
-  echo "Błąd: Nie udało się ustawić uprawnień dla connect_wifi.sh (kod:3)" >> /home/pi/FanDriver/update.log
+  echo "Błąd: Nie udało się ustawić uprawnień dla connect_wifi.sh (kod: 3)" >> "$LOG_FILE"
   exit 3
 else
-  echo "Ustawiono uprawnienia dla connect_wifi.sh" >> /home/pi/FanDriver/update.log
+  echo "Ustawiono uprawnienia dla connect_wifi.sh" >> "$LOG_FILE"
 fi
 
-# Uruchomienie ponownie
+# Uruchamianie ponowne systemu
+echo "Uruchamianie ponowne systemu..." >> "$LOG_FILE"
 reboot
+
+# Usunięcie tymczasowego skryptu
+rm -f "$0"
+EOF
+
+# Uruchomienie tymczasowego skryptu
+bash "$TEMP_SCRIPT"
