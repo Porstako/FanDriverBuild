@@ -17,18 +17,18 @@ cd
 cd /home/pi/FanDriver || { echo "Błąd: Nie udało się przejść do katalogu /home/pi/FanDriver" >> "$LOG_FILE"; exit 1; }
 
 # Pobieranie aktualizacji zdalnego repozytorium
-git fetch origin
-UPDATES_AVAILABLE=$(git status | grep 'behind')
+sudo git fetch origin
+UPDATES_AVAILABLE=$(sudo git status | grep 'behind')
 
 if [[ "$UPDATES_AVAILABLE" ]]; then
   # Zabijanie procesów
-  pkill -f server.js
+  sudo pkill -f server.js
   if [ $? -ne 0 ]; then
     echo "Błąd: Nie udało się zabić procesu server.js (kod: 1)" >> "$LOG_FILE"
     exit 1
   fi
 
-  pkill -f mainPI.bin
+  sudo pkill -f mainPI.bin
   if [ $? -ne 0 ]; then
     echo "Błąd: Nie udało się zabić procesu mainPI.bin (kod: 1)" >> "$LOG_FILE"
     exit 1
@@ -37,8 +37,8 @@ if [[ "$UPDATES_AVAILABLE" ]]; then
   cd /home/pi/FanDriver
 
   echo "git: Dostępne aktualizacje. Pobieranie..." >> "$LOG_FILE"
-  git stash
-  git pull origin
+  sudo git stash
+  sudo git pull origin
   if [ $? -ne 0 ]; then
       echo "Błąd: git: Nie udało się pobrać aktualizacji (kod: 2)" >> "$LOG_FILE"
       exit 2
@@ -50,7 +50,7 @@ else
 fi
 
 # Ustawienie uprawnień
-chmod +x /home/pi/FanDriver/rpi/mainPI.bin
+sudo chmod +x /home/pi/FanDriver/rpi/mainPI.bin
 if [ $? -ne 0 ]; then
   echo "Błąd: Nie udało się ustawić uprawnień dla mainPI.bin (kod: 3)" >> "$LOG_FILE"
   exit 3
@@ -58,7 +58,7 @@ else
   echo "Ustawiono uprawnienia dla mainPI.bin" >> "$LOG_FILE"
 fi
 
-chmod +x /home/pi/FanDriver/update_script.sh
+sudo chmod +x /home/pi/FanDriver/update_script.sh
 if [ $? -ne 0 ]; then
   echo "Błąd: Nie udało się ustawić uprawnień dla update_script.sh (kod: 3)" >> "$LOG_FILE"
   exit 3
@@ -66,7 +66,7 @@ else
   echo "Ustawiono uprawnienia dla update_script.sh" >> "$LOG_FILE"
 fi
 
-chmod +x /home/pi/FanDriver/connect_wifi.sh
+sudo chmod +x /home/pi/FanDriver/connect_wifi.sh
 if [ $? -ne 0 ]; then
   echo "Błąd: Nie udało się ustawić uprawnień dla connect_wifi.sh (kod: 3)" >> "$LOG_FILE"
   exit 3
@@ -76,11 +76,14 @@ fi
 
 # Uruchamianie ponowne systemu
 echo "Uruchamianie ponowne systemu..." >> "$LOG_FILE"
-reboot
+sudo reboot
 
 # Usunięcie tymczasowego skryptu
-rm -f "$0"
+sudo rm -f "$0"
 EOF
 
-# Uruchomienie tymczasowego skryptu
-bash "$TEMP_SCRIPT"
+# Uruchomienie tymczasowego skryptu z sudo
+sudo bash "$TEMP_SCRIPT"
+
+# Usunięcie tymczasowego skryptu po wykonaniu
+sudo rm -f "$TEMP_SCRIPT"
