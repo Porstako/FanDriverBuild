@@ -2,6 +2,7 @@
 
 cd
 cd /home/pi/FanDriver
+git fetch origin
 UPDATES_AVAILABLE=$(git status | grep 'behind')
 
 cd
@@ -21,7 +22,6 @@ fi
 
 # Aktualizacja kodu
 cd /home/pi/FanDriver
-git fetch origin
 
 # Sprawdzanie, czy lokalny stan jest zaktualizowany
 if [[ "$UPDATES_AVAILABLE" ]]; then
