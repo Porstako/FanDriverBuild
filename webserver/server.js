@@ -52,7 +52,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.get('/update', (req, res) => {
-  exec('sh /home/pi/FanDriver/update_script.sh', (error, stdout, stderr) => {
+  exec('sh /home/test/FanDriver/update_script.sh', (error, stdout, stderr) => {
     if (error) {
       console.error(`exec error: ${error}`);
       res.status(500).send('Update Failed');
@@ -65,12 +65,12 @@ app.get('/update', (req, res) => {
 });
 
 app.get('/stats', (req, res) => {
-  res.sendFile(path.join('/home/pi/FanDriver/rpi', 'stats.csv'));
+  res.sendFile(path.join('/home/test/FanDriver/home/pi/FanDriver/rpi', 'stats.csv'));
 });
 
 app.post('/connect', (req, res) => {
   const { ssid, password } = req.body;
-  const script = `/home/pi/FanDriver/connect_wifi.sh "${ssid}" "${password}"`;
+  const script = `/home/test/FanDriver/connect_wifi.sh "${ssid}" "${password}"`;
   
   exec(script, (error, stdout, stderr) => {
       if (error) {
