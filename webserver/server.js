@@ -65,7 +65,7 @@ app.get('/update', (req, res) => {
 });
 
 app.get('/stats', (req, res) => {
-  res.sendFile(path.join('/home/pi/FanDriver/rpi', 'stats.json'));
+  res.sendFile(path.join('/home/pi/FanDriver/rpi', 'stats.csv'));
 });
 
 app.post('/connect', (req, res) => {

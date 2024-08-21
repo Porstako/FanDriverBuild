@@ -8,11 +8,24 @@ var aggregatedStats;
 var bandWidth = 0;
 
 function fetchAndUpdate(){
-    fetch('/stats')
-    .then(response => response.json())
+    d3.csv('/stats', function(d) {
+        // Konwersja odpowiednich pól na liczby
+        return {
+            Date: d.Date,
+            kWh: +d.kWh,  
+            Watt: +d.Watt,
+            Volt: +d.Volt,
+            Amper: +d.Amper,
+            Wind: +d.Wind,
+            SweepSpeed: +d.SweepSpeed,
+            PWMTemperature: +d.PWMTemperature,
+            TurbineTemperature: +d.TurbineTemperature
+        };})
     .then(data => {
+        aggregatedStats = null;
         stats = data;
         aggregatedStats = aggregateData(stats, selectedPrecision);
+        stats = null;
         drawChart();
         updateChart();});
 }
@@ -446,7 +459,7 @@ function updateInteractionRects() {
         .on("mouseover", (event, d) => {
             tooltip.style("opacity", 1);
             tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.kWh).toFixed(2)} kWh`)
-                .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                 .style("top", `${event.clientY - 10}px`);
         })
         .on("mouseout", () => {
@@ -479,7 +492,7 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Watt)} W`)
-                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         updateDots();
                         svg.selectAll(".dot")
@@ -496,7 +509,7 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Volt)} V`)
-                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
@@ -514,7 +527,7 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Amper).toFixed(1)} A`)
-                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
@@ -532,7 +545,7 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Wind).toFixed(1)} m/s`)
-                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
@@ -550,7 +563,7 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.SweepSpeed)} rpm`)
-                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
@@ -568,7 +581,7 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.PWMTemperature)} &#176;C`)
-                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
@@ -586,7 +599,7 @@ function updateInteractionRects() {
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
                         tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.TurbineTemperature)} &#176;C`)
-                            .style("left", `${event.clientX + 10 - ((window.innerWidth-800)/2)}px`)
+                            .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
                             .filter(dot => dot.Date === d.Date)
@@ -636,6 +649,7 @@ function updateChart(){
             d3.select('#xAxis')
                 .transition()
                 .call(d3.axisBottom(x)
+                .tickFormat(d3.timeFormat("%H:%M"))
                 .ticks(d3.timeHour.every(2))); 
             break;
         case "1 TYDZIEŃ":
@@ -689,13 +703,18 @@ function updateChart(){
     switch(selectedDataType){
         case "kWh":
             var maxY = d3.max(aggregatedStats, d => d.kWh);
-            if (maxY<10) maxY=10;
+            if (maxY<1) maxY=1;
+            else if (maxY<2) maxY=2;
+            else if (maxY<5) maxY=5;
+            else if (maxY<10) maxY=10;
             else if (maxY<20) maxY=20;
             else if (maxY<40) maxY=40;
             else if (maxY<50) maxY=50;
             else if (maxY<100) maxY=100;
             else if (maxY<200) maxY=200;
             else if (maxY<500) maxY=500;
+            else if (maxY<1000) maxY=1000;
+            else if (maxY<2000) maxY=2000;
             y.domain([0, maxY]);
             d3.select('#yAxis')
                 .transition()
