@@ -620,7 +620,24 @@ function updateInteractionRects() {
 function updateChart(){
     // Pobierz aktualną datę
     const now = new Date();
-    fetchAndUpdate();
+    d3.csv('/stats', function(d) {
+        // Konwersja odpowiednich pól na liczby
+        return {
+            Date: d.Date,
+            kWh: +d.kWh,  
+            Watt: +d.Watt,
+            Volt: +d.Volt,
+            Amper: +d.Amper,
+            Wind: +d.Wind,
+            SweepSpeed: +d.SweepSpeed,
+            PWMTemperature: +d.PWMTemperature,
+            TurbineTemperature: +d.TurbineTemperature
+        };})
+    .then(data => {
+        aggregatedStats = null;
+        stats = data;
+        aggregatedStats = aggregateData(stats, selectedPrecision);
+        stats = null;});
     // Ustal nowy zakres dat na podstawie wybranej opcji w dateRange
     let startDate;
     switch (selectedDateRange) {
