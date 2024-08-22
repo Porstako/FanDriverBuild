@@ -27,7 +27,7 @@ function fetchAndUpdate(){
         aggregatedStats = aggregateData(stats, selectedPrecision);
         drawChart();
         updateChart();});
-        stats = null;
+        //stats = null;
     }
 
 fetchAndUpdate();
