@@ -637,7 +637,8 @@ function updateChart(){
         aggregatedStats = null;
         stats = data;
         aggregatedStats = aggregateData(stats, selectedPrecision);
-        stats = null;});
+        stats = null;
+        drawChart();});
     // Ustal nowy zakres dat na podstawie wybranej opcji w dateRange
     let startDate;
     switch (selectedDateRange) {
