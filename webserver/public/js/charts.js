@@ -25,10 +25,10 @@ function fetchAndUpdate(){
         aggregatedStats = null;
         stats = data;
         aggregatedStats = aggregateData(stats, selectedPrecision);
-        stats = null;
         drawChart();
         updateChart();});
-}
+        stats = null;
+    }
 
 fetchAndUpdate();
 setInterval(fetchAndUpdate, 60000);
@@ -41,7 +41,7 @@ let selectedDateRange = "1 GODZ.";
 let selectedDataType = "kWh";
 
 
-const precisionOptions = ["1 MIN.", "15 MIN.", "1 GODZ.", "4 GODZ.", "1 DZIEŃ", "1 MIESIĄC", ];
+const precisionOptions = ["1 MIN.", "15 MIN.", "1 GODZ.", "4 GODZ.", "1 DZIEŃ", "1 MIESIĄC"];
 d3.select("#precision").selectAll("option")
     .data(precisionOptions)
     .enter()
@@ -620,25 +620,7 @@ function updateInteractionRects() {
 function updateChart(){
     // Pobierz aktualną datę
     const now = new Date();
-    d3.csv('/stats', function(d) {
-        // Konwersja odpowiednich pól na liczby
-        return {
-            Date: d.Date,
-            kWh: +d.kWh,  
-            Watt: +d.Watt,
-            Volt: +d.Volt,
-            Amper: +d.Amper,
-            Wind: +d.Wind,
-            SweepSpeed: +d.SweepSpeed,
-            PWMTemperature: +d.PWMTemperature,
-            TurbineTemperature: +d.TurbineTemperature
-        };})
-    .then(data => {
-        aggregatedStats = null;
-        stats = data;
-        aggregatedStats = aggregateData(stats, selectedPrecision);
-        stats = null;
-        drawChart();});
+    aggregatedStats = aggregateData(stats, selectedPrecision);
     // Ustal nowy zakres dat na podstawie wybranej opcji w dateRange
     let startDate;
     switch (selectedDateRange) {
