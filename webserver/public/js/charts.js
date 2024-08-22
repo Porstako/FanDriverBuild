@@ -620,7 +620,7 @@ function updateInteractionRects() {
 function updateChart(){
     // Pobierz aktualną datę
     const now = new Date();
-    aggregatedStats = aggregateData(stats, selectedPrecision);
+    fetchAndUpdate();
     // Ustal nowy zakres dat na podstawie wybranej opcji w dateRange
     let startDate;
     switch (selectedDateRange) {
