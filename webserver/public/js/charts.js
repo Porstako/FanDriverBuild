@@ -1,3 +1,7 @@
+let selectedPrecision = "1 MIN.";
+let selectedDateRange = "1 GODZ.";
+let selectedDataType = "kWh";
+
 //////////
 // DATA //
 //////////
@@ -13,49 +17,49 @@ function fetchAndUpdate(){
             case "kWh":
                 return{
                     Date: d.Date,
-                    kWh: +d.kWh  
+                    Value: +d.kWh  
                 }
                 break;
             case "MOC":
                 return{
                     Date: d.Date,
-                    Watt: +d.Watt
+                    Value: +d.Watt
                 }
                 break;
             case "NAPIĘCIE":
                 return{
                     Date: d.Date,
-                    Volt: +d.Volt
+                    Value: +d.Volt
                 }
                 break;
             case "PRĄD":
                 return{
                     Date: d.Date,
-                    Amper: +d.Amper
+                    Value: +d.Amper
                 }
                 break;
             case "WIATR":
                 return{
                     Date: d.Date,
-                    Wind: +d.Wind
+                    Value: +d.Wind
                 }
                 break;
             case "OBROTY":
                 return{
                     Date: d.Date,
-                    SweepSpeed: +d.SweepSpeed
+                    Value: +d.SweepSpeed
                 }
                 break;
             case "TEMP. WODY":
                 return{
                     Date: d.Date,
-                    PWMTemperature: +d.PWMTemperature
+                    Value: +d.PWMTemperature
                 }
                 break;
             case "TEMP. UZWOJ.":
                 return{
                     Date: d.Date,
-                    TurbineTemperature: +d.TurbineTemperature
+                    Value: +d.TurbineTemperature
                 }
                 break;
         }
@@ -75,9 +79,6 @@ setInterval(fetchAndUpdate, 60000);
 ////////////////
 // SELECTIONS //
 ////////////////
-let selectedPrecision = "1 MIN.";
-let selectedDateRange = "1 GODZ.";
-let selectedDataType = "kWh";
 
 
 const precisionOptions = ["1 MIN.", "15 MIN.", "1 GODZ.", "4 GODZ.", "1 DZIEŃ", "1 MIESIĄC"];
@@ -175,34 +176,7 @@ svg.append("g")
 
 const lineStats = d3.line()
     .x(function(d) { return x(d.Date); })
-    .y(function(d) { 
-        switch (selectedDataType){
-            case "kWh":
-                return y(d.kWh); 
-                break;
-            case "MOC":
-                return y(d.Watt); 
-                break;
-            case "NAPIĘCIE":
-                return y(d.Volt); 
-                break;
-            case "PRĄD":
-                return y(d.Amper); 
-                break;
-            case "WIATR":
-                return y(d.Wind); 
-                break;
-            case "OBROTY":
-                return y(d.SweepSpeed); 
-                break;
-            case "TEMP. WODY":
-                return y(d.PWMTemperature); 
-                break;
-            case "TEMP. UZWOJ.":
-                return y(d.TurbineTemperature); 
-                break;
-        }
-    })
+    .y(function(d) { return y(d.Value); })
     .curve(d3.curveMonotoneX);
 
 
@@ -229,31 +203,7 @@ function drawChart()
             .enter().append("circle") // Dodaje elementy 'circle' dla każdego punktu danych
             .attr("class", "dot")
             .attr("cx", function(d) { return x(d.Date); })
-            .attr("cy", function(d) { 
-            switch (selectedDataType){
-                case "MOC":
-                    return y(d.Watt); 
-                    break;
-                case "NAPIĘCIE":
-                    return y(d.Volt); 
-                    break;
-                case "PRĄD":
-                    return y(d.Amper); 
-                    break;
-                case "WIATR":
-                    return y(d.Wind); 
-                    break;
-                case "OBROTY":
-                    return y(d.SweepSpeed); 
-                    break;
-                case "TEMP. WODY":
-                    return y(d.PWMTemperature); 
-                    break;
-                case "TEMP. UZWOJ.":
-                    return y(d.TurbineTemperature); 
-                    break;
-            }
-         })
+            .attr("cy", function(d) { return y(d.Value); })
         .attr("r", 5) // Promień punktu
         .style("fill", "#007cef")
         .style("opacity", 0.0);
@@ -279,8 +229,8 @@ function drawChart()
         .data(aggregatedStats)
         .join("rect")
         .attr("x", (d) => x(d.Date))
-        .attr("y", (d) => y(d.kWh))
-        .attr("height", (d) => y(0) - y(d.kWh))
+        .attr("y", (d) => y(d.Value))
+        .attr("height", (d) => y(0) - y(d.Value))
         .attr("width", bandWidth*0.90)
         .attr('clip-path', 'url(#clip)');
         
@@ -328,20 +278,20 @@ function aggregateData(stats, precision) {
     });
 
     grouped.forEach((values, key) => {
-        var temp = { Date: key, kWh: 0 };
+        var temp = { Date: key, Value: 0 };
         let count = 0;
         values.forEach(v => {
             for (const prop in v) {
-                if (prop !== 'Date' && prop !== 'kWh') {
+                if (prop !== 'Date' && selectedDataType!=="kWh") {
                     temp[prop] = (temp[prop] || 0) + v[prop];
                 }
             }
-            temp.kWh += parseFloat(v.kWh);
+            if (selectedDataType==="kWh")temp.Value += parseFloat(v.Value);
             count++;
         });
 
         for (const prop in temp) {
-            if (prop !== 'Date' && prop !== 'kWh') {
+            if (prop !== 'Date' && selectedDataType!=="kWh") {
                 temp[prop] /= count; // Oblicza średnią dla każdej statystyki, oprócz kWh
             }
         }
@@ -371,7 +321,7 @@ function updateDots() {
             // Dodawanie nowych elementów
             dotsEnter.attr("class", "dot")
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Watt))
+                .attr("cy", d => y(d.Value))
                 .attr("r", 5)
                 .style("fill", "#007cef")
                 .style("opacity", 0)
@@ -381,14 +331,14 @@ function updateDots() {
             dotsEnter.merge(dots)
                 .style("opacity", 0)
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Watt))
+                .attr("cy", d => y(d.Value))
                 .attr('clip-path', 'url(#clip)');
                 break;
         case "NAPIĘCIE":
             // Dodawanie nowych elementów
             dotsEnter.attr("class", "dot")
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Volt))
+                .attr("cy", d => y(d.Value))
                 .attr("r", 5)
                 .style("fill", "#007cef")
                 .style("opacity", 0)
@@ -398,14 +348,14 @@ function updateDots() {
             dotsEnter.merge(dots)
                 .style("opacity", 0)
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Volt))
+                .attr("cy", d => y(d.Value))
                 .attr('clip-path', 'url(#clip)');
             break;
         case "PRĄD":
             // Dodawanie nowych elementów
             dotsEnter.attr("class", "dot")
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Amper))
+                .attr("cy", d => y(d.Value))
                 .attr("r", 5)
                 .style("fill", "#007cef")
                 .style("opacity", 0)
@@ -415,14 +365,14 @@ function updateDots() {
             dotsEnter.merge(dots)
                 .style("opacity", 0)
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Amper))
+                .attr("cy", d => y(d.Value))
                 .attr('clip-path', 'url(#clip)');
             break;
         case "WIATR":
             // Dodawanie nowych elementów
             dotsEnter.attr("class", "dot")
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Wind))
+                .attr("cy", d => y(d.Value))
                 .attr("r", 5)
                 .style("fill", "#007cef")
                 .style("opacity", 0)
@@ -432,14 +382,14 @@ function updateDots() {
             dotsEnter.merge(dots)
                 .style("opacity", 0)
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.Wind))
+                .attr("cy", d => y(d.Value))
                 .attr('clip-path', 'url(#clip)');
             break;
         case "OBROTY":
             // Dodawanie nowych elementów
             dotsEnter.attr("class", "dot")
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.SweepSpeed))
+                .attr("cy", d => y(d.Value))
                 .attr("r", 5)
                 .style("fill", "#007cef")
                 .style("opacity", 0)
@@ -449,14 +399,14 @@ function updateDots() {
             dotsEnter.merge(dots)
                 .style("opacity", 0)
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.SweepSpeed))
+                .attr("cy", d => y(d.Value))
                 .attr('clip-path', 'url(#clip)');
             break;
         case "TEMP. WODY":
             // Dodawanie nowych elementów
             dotsEnter.attr("class", "dot")
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.PWMTemperature))
+                .attr("cy", d => y(d.Value))
                 .attr("r", 5)
                 .style("fill", "#007cef")
                 .style("opacity", 0)
@@ -466,14 +416,14 @@ function updateDots() {
             dotsEnter.merge(dots)
                 .style("opacity", 0)
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.PWMTemperature))
+                .attr("cy", d => y(d.Value))
                 .attr('clip-path', 'url(#clip)');
             break;
         case "TEMP. UZWOJ.":
             // Dodawanie nowych elementów
             dotsEnter.attr("class", "dot")
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.TurbineTemperature))
+                .attr("cy", d => y(d.Value))
                 .attr("r", 5)
                 .style("fill", "#007cef")
                 .style("opacity", 0)
@@ -483,7 +433,7 @@ function updateDots() {
             dotsEnter.merge(dots)
                 .style("opacity", 0)
                 .attr("cx", d => x(d.Date))
-                .attr("cy", d => y(d.TurbineTemperature))
+                .attr("cy", d => y(d.Value))
                 .attr('clip-path', 'url(#clip)');
             break;
     }
@@ -559,7 +509,7 @@ function updateInteractionRects() {
                 enterRects.merge(interactionRects)
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
-                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Watt)} W`)
+                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Value)} W`)
                             .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         updateDots();
@@ -576,7 +526,7 @@ function updateInteractionRects() {
                 enterRects.merge(interactionRects)
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
-                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Volt)} V`)
+                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Value)} V`)
                             .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
@@ -594,7 +544,7 @@ function updateInteractionRects() {
                 enterRects.merge(interactionRects)
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
-                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Amper).toFixed(1)} A`)
+                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Value).toFixed(1)} A`)
                             .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
@@ -612,7 +562,7 @@ function updateInteractionRects() {
                 enterRects.merge(interactionRects)
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
-                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Wind).toFixed(1)} m/s`)
+                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${parseFloat(d.Value).toFixed(1)} m/s`)
                             .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
@@ -630,7 +580,7 @@ function updateInteractionRects() {
                 enterRects.merge(interactionRects)
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
-                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.SweepSpeed)} rpm`)
+                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Value)} rpm`)
                             .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
@@ -648,7 +598,7 @@ function updateInteractionRects() {
                 enterRects.merge(interactionRects)
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
-                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.PWMTemperature)} &#176;C`)
+                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Value)} &#176;C`)
                             .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
@@ -666,7 +616,7 @@ function updateInteractionRects() {
                 enterRects.merge(interactionRects)
                     .on("mouseover", (event, d) => {
                         tooltip.style("opacity", 1);
-                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.TurbineTemperature)} &#176;C`)
+                        tooltip.html(`${d.Date.toLocaleDateString()}<br/>${Math.round(d.Value)} &#176;C`)
                             .style("left", `${event.clientX - 50 - ((window.innerWidth-800)/2)}px`)
                             .style("top", `${event.clientY - 10}px`);
                         svg.selectAll(".dot")
@@ -770,7 +720,7 @@ function updateChart(){
     }
     switch(selectedDataType){
         case "kWh":
-            var maxY = d3.max(aggregatedStats, d => d.kWh);
+            var maxY = d3.max(aggregatedStats, d => d.Value);
             if (maxY<1) maxY=1;
             else if (maxY<2) maxY=2;
             else if (maxY<5) maxY=5;
@@ -805,8 +755,8 @@ function updateChart(){
                 .data(aggregatedStats)
                 .transition()
                 .attr("x", d => x(d.Date))
-                .attr("y", d => y(d.kWh))
-                .attr("height", d => y(0) - y(d.kWh))
+                .attr("y", d => y(d.Value))
+                .attr("height", d => y(0) - y(d.Value))
                 .style("opacity","1")
                 .attr("width", bandWidth*0.90);
 
