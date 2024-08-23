@@ -9,25 +9,64 @@ var bandWidth = 0;
 
 function fetchAndUpdate(){
     d3.csv('/stats', function(d) {
-        // Konwersja odpowiednich pól na liczby
-        return {
-            Date: d.Date,
-            kWh: +d.kWh,  
-            Watt: +d.Watt,
-            Volt: +d.Volt,
-            Amper: +d.Amper,
-            Wind: +d.Wind,
-            SweepSpeed: +d.SweepSpeed,
-            PWMTemperature: +d.PWMTemperature,
-            TurbineTemperature: +d.TurbineTemperature
-        };})
+        switch (selectedDataType){
+            case "kWh":
+                return{
+                    Date: d.Date,
+                    kWh: +d.kWh  
+                }
+                break;
+            case "MOC":
+                return{
+                    Date: d.Date,
+                    Watt: +d.Watt
+                }
+                break;
+            case "NAPIĘCIE":
+                return{
+                    Date: d.Date,
+                    Volt: +d.Volt
+                }
+                break;
+            case "PRĄD":
+                return{
+                    Date: d.Date,
+                    Amper: +d.Amper
+                }
+                break;
+            case "WIATR":
+                return{
+                    Date: d.Date,
+                    Wind: +d.Wind
+                }
+                break;
+            case "OBROTY":
+                return{
+                    Date: d.Date,
+                    SweepSpeed: +d.SweepSpeed
+                }
+                break;
+            case "TEMP. WODY":
+                return{
+                    Date: d.Date,
+                    PWMTemperature: +d.PWMTemperature
+                }
+                break;
+            case "TEMP. UZWOJ.":
+                return{
+                    Date: d.Date,
+                    TurbineTemperature: +d.TurbineTemperature
+                }
+                break;
+        }
+    })
     .then(data => {
         aggregatedStats = null;
+        stats = null;
         stats = data;
         aggregatedStats = aggregateData(stats, selectedPrecision);
         drawChart();
         updateChart();});
-        //stats = null;
     }
 
 fetchAndUpdate();
@@ -68,15 +107,15 @@ d3.select("#dataType").selectAll("option")
 
 d3.select("#precision").on("change", function(event){
     selectedPrecision = d3.select(this).property("value");
-    updateChart();
+    fetchAndUpdate();
 });
 d3.select("#dateRange").on("change", function(event){
     selectedDateRange = d3.select(this).property("value");
-    updateChart();
+    fetchAndUpdate();
 });
 d3.select("#dataType").on("change", function(event){
     selectedDataType = d3.select(this).property("value");
-    updateChart();
+    fetchAndUpdate();
 });
 
 ////////////////
@@ -134,47 +173,45 @@ svg.append("g")
     .style("stroke-width", 3)
     .call(d3.axisLeft(y));
 
-const lineVolt = d3.line()
+const lineStats = d3.line()
     .x(function(d) { return x(d.Date); })
-    .y(function(d) { return y(d.Volt); })
+    .y(function(d) { 
+        switch (selectedDataType){
+            case "kWh":
+                return y(d.kWh); 
+                break;
+            case "MOC":
+                return y(d.Watt); 
+                break;
+            case "NAPIĘCIE":
+                return y(d.Volt); 
+                break;
+            case "PRĄD":
+                return y(d.Amper); 
+                break;
+            case "WIATR":
+                return y(d.Wind); 
+                break;
+            case "OBROTY":
+                return y(d.SweepSpeed); 
+                break;
+            case "TEMP. WODY":
+                return y(d.PWMTemperature); 
+                break;
+            case "TEMP. UZWOJ.":
+                return y(d.TurbineTemperature); 
+                break;
+        }
+    })
     .curve(d3.curveMonotoneX);
 
-const lineWatt = d3.line()
-    .x(function(d) { return x(d.Date); })
-    .y(function(d) { return y(d.Watt); })
-    .curve(d3.curveMonotoneX);
-
-const lineAmper = d3.line()
-    .x(function(d) { return x(d.Date); })
-    .y(function(d) { return y(d.Amper); })
-    .curve(d3.curveMonotoneX);
-
-const lineWind = d3.line()
-    .x(function(d) { return x(d.Date); })
-    .y(function(d) { return y(d.Wind); })
-    .curve(d3.curveMonotoneX);
-
-const lineSweepSpeed = d3.line()
-    .x(function(d) { return x(d.Date); })
-    .y(function(d) { return y(d.SweepSpeed); })
-    .curve(d3.curveMonotoneX);
-
-const linePWMTemperature = d3.line()
-    .x(function(d) { return x(d.Date); })
-    .y(function(d) { return y(d.PWMTemperature); })
-    .curve(d3.curveMonotoneX);
-
-const lineTurbineTemperature = d3.line()
-    .x(function(d) { return x(d.Date); })
-    .y(function(d) { return y(d.TurbineTemperature); })
-    .curve(d3.curveMonotoneX);
 
 function drawChart()
 {
     svg.selectAll(".grid")
         .data(horizontalLines)
         .enter()
-        .append("line")  // Dodaje element linii
+        .append("line")
         .attr("class", "grid")
         .attr("x1", margin.Left)  // Początek linii na lewo
         .attr("x2", width - margin.Right)  // Koniec linii na prawo
@@ -184,28 +221,58 @@ function drawChart()
         .attr("stroke-width", "1px")  // Grubość linii
         .attr("stroke-dasharray", "2,2");  // Styl linii: przerywana
 
-    svg.selectAll(".dot")
-        .data(aggregatedStats)
-        .enter().append("circle") // Dodaje elementy 'circle' dla każdego punktu danych
-        .attr("class", "dot")
-        .attr("cx", function(d) { return x(d.Date); })
-        .attr("cy", function(d) { return y(d.Volt); })
+        if(selectedDataType!="kWh")
+        {
+
+            svg.selectAll(".dot")
+            .data(aggregatedStats)
+            .enter().append("circle") // Dodaje elementy 'circle' dla każdego punktu danych
+            .attr("class", "dot")
+            .attr("cx", function(d) { return x(d.Date); })
+            .attr("cy", function(d) { 
+            switch (selectedDataType){
+                case "MOC":
+                    return y(d.Watt); 
+                    break;
+                case "NAPIĘCIE":
+                    return y(d.Volt); 
+                    break;
+                case "PRĄD":
+                    return y(d.Amper); 
+                    break;
+                case "WIATR":
+                    return y(d.Wind); 
+                    break;
+                case "OBROTY":
+                    return y(d.SweepSpeed); 
+                    break;
+                case "TEMP. WODY":
+                    return y(d.PWMTemperature); 
+                    break;
+                case "TEMP. UZWOJ.":
+                    return y(d.TurbineTemperature); 
+                    break;
+            }
+         })
         .attr("r", 5) // Promień punktu
         .style("fill", "#007cef")
         .style("opacity", 0.0);
-
-    svg.append("path")
+        
+        svg.append("path")
         .attr("class", "statsLine")
         .datum(aggregatedStats)
         .attr("fill", "none")
         .attr("stroke", "#30c79f")
         .attr("stroke-width", 1)
-        .attr("d", lineVolt)
+        .attr("d", lineStats)
         .attr('clip-path', 'url(#clip)');
-
+        
+    }
     bandWidth = x(aggregatedStats[1].Date) - x(aggregatedStats[0].Date);  // Obliczanie odległości między pierwszymi dwoma punktami
+    if (selectedDataType==="kWh")
+    {
 
-    svg.append("g")
+        svg.append("g")
         .attr("class", "statsBars")
         .attr("fill", "steelblue")
         .selectAll("rect")
@@ -216,8 +283,9 @@ function drawChart()
         .attr("height", (d) => y(0) - y(d.kWh))
         .attr("width", bandWidth*0.90)
         .attr('clip-path', 'url(#clip)');
-
-    // Definicja obszaru klipowania
+        
+    }
+        // Definicja obszaru klipowania
     svg.append("clipPath")   // Dodaje nową definicję clipPath
         .attr("id", "clip")   // Nadaje ID dla referencji
         .append("rect")       // Dodaje prostokąt, który służy jako obszar klipowania
@@ -755,7 +823,7 @@ function updateChart(){
                 .datum(aggregatedStats)
                 .transition() // Rozpocznij animację
                 .style("opacity","1")
-                .attr("d", lineWatt);
+                .attr("d", lineStats);
 
             svg.selectAll(".statsBars rect")
                 .style("opacity","0");
@@ -770,7 +838,7 @@ function updateChart(){
                 .datum(aggregatedStats)
                 .transition() // Rozpocznij animację
                 .style("opacity","1")
-                .attr("d", lineVolt);
+                .attr("d", lineStats);
 
             svg.selectAll(".statsBars rect")
                 .style("opacity","0");
@@ -784,7 +852,7 @@ function updateChart(){
                 .datum(aggregatedStats)
                 .transition() // Rozpocznij animację
                 .style("opacity","1")
-                .attr("d", lineAmper);
+                .attr("d", lineStats);
 
             svg.selectAll(".statsBars rect")
                 .style("opacity","0");
@@ -798,7 +866,7 @@ function updateChart(){
                 .datum(aggregatedStats)
                 .transition() // Rozpocznij animację
                 .style("opacity","1")
-                .attr("d", lineWind);
+                .attr("d", lineStats);
 
             svg.selectAll(".statsBars rect")
                 .style("opacity","0");
@@ -812,7 +880,7 @@ function updateChart(){
                 .datum(aggregatedStats)
                 .transition() // Rozpocznij animację
                 .style("opacity","1")
-                .attr("d", lineSweepSpeed);
+                .attr("d", lineStats);
 
             svg.selectAll(".statsBars rect")
                 .style("opacity","0");
@@ -826,7 +894,7 @@ function updateChart(){
                 .datum(aggregatedStats)
                 .transition() // Rozpocznij animację
                 .style("opacity","1")
-                .attr("d", linePWMTemperature);
+                .attr("d", lineStats);
 
             svg.selectAll(".statsBars rect")
                 .style("opacity","0");
@@ -840,7 +908,7 @@ function updateChart(){
                 .datum(aggregatedStats)
                 .style("opacity","1")
                 .transition() // Rozpocznij animację
-                .attr("d", lineTurbineTemperature);
+                .attr("d", lineStats);
 
             svg.selectAll(".statsBars rect")
                 .style("opacity","0");
